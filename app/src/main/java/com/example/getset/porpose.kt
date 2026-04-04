@@ -91,6 +91,13 @@ fun MyPurpose(){
             isSelected= isOption5Selected,
             onClick={isOption5Selected=!isOption5Selected}
         )
+        Spacer(modifier = Modifier.height(48.dp))
+        Button(onClick = {},
+            enabled = isOneChoose,
+            modifier = Modifier.fillMaxWidth(0.6f)
+        ) {
+            Text(text = "Далее", fontSize = 18.sp)
+        }
     }
 }
 
@@ -115,7 +122,7 @@ fun SelectableButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
             if (isSelected){
                 Icon(
                     painter = painterResource(id = android.R.drawable.checkbox_on_background),
-                    contentDescription = "ирьбь ит псапскев",
+                    contentDescription = " ",
                     modifier = Modifier.size(20.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
