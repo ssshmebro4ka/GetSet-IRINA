@@ -115,7 +115,7 @@ fun SelectableButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
             if (isSelected){
                 Icon(
                     painter = painterResource(id = android.R.drawable.checkbox_on_background),
-                    contentDescription = "djcnksdncsbd",
+                    contentDescription = "ирьбь ит псапскев",
                     modifier = Modifier.size(20.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
