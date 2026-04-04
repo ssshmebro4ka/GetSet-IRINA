@@ -1,4 +1,5 @@
-import androidx.compose.foundation.Image
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.getset.R
 
+@SuppressLint("InvalidColorHexValue")
 @Composable
 fun SignInScreen(){
     var login by remember { mutableStateOf("") }
@@ -42,12 +44,8 @@ fun SignInScreen(){
     Box(
         modifier = Modifier.fillMaxSize()
     ){
-        Image(painter = painterResource(id=R.drawable.background1),
-            "background",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
         Column (modifier = Modifier
+            .background(Color.White)
             .fillMaxSize()
             .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -68,7 +66,7 @@ fun SignInScreen(){
                 text = "Вход",
                 fontSize = 32.sp,
                 fontWeight= FontWeight.Bold,
-                color= Color(0xFFF11BA805),
+                color= Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 50.dp),
@@ -81,9 +79,9 @@ fun SignInScreen(){
                 label={ Text("Логин", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
-                    focusedContainerColor  = Color(0xFFFC5FC73),
+                    focusedContainerColor  = Color(0xFFFA1D05A),
                     focusedLabelColor = Color(0xFFF117C00),
-                    unfocusedLabelColor = Color(0xFFF5ED739),
+                    unfocusedLabelColor = Color(0xFFF117C00),
                     focusedBorderColor = Color(0xFFF117C00),
                     unfocusedBorderColor = Color(0xFFF117C00)
                 ),
@@ -97,9 +95,9 @@ fun SignInScreen(){
                 label={Text("Пароль", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
-                    focusedContainerColor  = Color(0xFFFC5FC73),
+                    focusedContainerColor  = Color(0xFFFA1D05A),
                     focusedLabelColor = Color(0xFFF117C00),
-                    unfocusedLabelColor = Color(0xFFF5ED739),
+                    unfocusedLabelColor = Color(0xFFF117C00),
                     focusedBorderColor = Color(0xFFF117C00),
                     unfocusedBorderColor = Color(0xFFF117C00)
                 ),
@@ -118,7 +116,7 @@ fun SignInScreen(){
                     .height(56.dp),
                 colors= ButtonDefaults.buttonColors(
                     containerColor = if (isFormValid) Color(0xFFF117C00) else Color (0xFFFB7D092),
-                    contentColor = if(isFormValid) Color(0xFFFB7D092) else Color(color = 0xFFF117C00) ,
+                    contentColor = if(isFormValid) Color(0xFFFFFFEFE) else Color(color = 0xFFF117C00) ,
                     disabledContainerColor = Color(0xFFFB7D092),
                     disabledContentColor = Color(0xFFF117C00)
                 ),

@@ -1,6 +1,7 @@
 package com.example.getset
 
 import SignInScreen
+import android.R
 import android.R.attr.contentDescription
 import android.R.attr.enabled
 import android.R.attr.fontWeight
@@ -10,6 +11,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -57,8 +59,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GetSetTheme {
-                GetSetScreen()
-                ///SignInScreen()
+                ///GetSetScreen()
+                SignInScreen()
             }
         }
     }
@@ -77,12 +79,8 @@ fun GetSetScreen(){
     Box(
         modifier = Modifier.fillMaxSize()
     ){
-        Image(painter = painterResource(id=R.drawable.background1),
-            "background",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
         Column (modifier = Modifier
+            .background(Color.White)
             .fillMaxSize()
             .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -103,7 +101,7 @@ fun GetSetScreen(){
                 text = "Регистрация",
                 fontSize = 32.sp,
                 fontWeight= FontWeight.Bold,
-                color= Color(0xFFF11BA805),
+                color= Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 50.dp),
@@ -116,9 +114,9 @@ fun GetSetScreen(){
                 label={ Text("Логин", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
-                    focusedContainerColor  = Color(0xFFFC5FC73),
+                    focusedContainerColor  = Color(0xFFFA1D05A),
                     focusedLabelColor = Color(0xFFF117C00),
-                    unfocusedLabelColor = Color(0xFFF5ED739),
+                    unfocusedLabelColor = Color(0xFFF117C00),
                     focusedBorderColor = Color(0xFFF117C00),
                     unfocusedBorderColor = Color(0xFFF117C00)
                 ),
@@ -132,9 +130,9 @@ fun GetSetScreen(){
                 label={Text("Пароль", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
-                    focusedContainerColor  = Color(0xFFFC5FC73),
+                    focusedContainerColor  = Color(0xFFFA1D05A),
                     focusedLabelColor = Color(0xFFF117C00),
-                    unfocusedLabelColor = Color(0xFFF5ED739),
+                    unfocusedLabelColor = Color(0xFFF117C00),
                     focusedBorderColor = Color(0xFFF117C00),
                     unfocusedBorderColor = Color(0xFFF117C00)
                 ),
@@ -153,7 +151,7 @@ fun GetSetScreen(){
                     .height(56.dp),
                 colors= ButtonDefaults.buttonColors(
                     containerColor = if (isFormValid) Color(0xFFF117C00) else Color (0xFFFB7D092),
-                    contentColor = if(isFormValid) Color(0xFFFB7D092) else Color(color = 0xFFF117C00) ,
+                    contentColor = if(isFormValid) Color(0xFFFFFFEFE) else Color(color = 0xFFF117C00) ,
                     disabledContainerColor = Color(0xFFFB7D092),
                     disabledContentColor = Color(0xFFF117C00)
                 ),
@@ -165,7 +163,7 @@ fun GetSetScreen(){
             }
             Spacer(modifier = Modifier.height(40.dp))
             Text(text="Уже есть аккаунт ?",
-                fontSize =18.sp,
+                fontSize =20.sp,
                 color=Color(0xFFF117C00)
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -175,7 +173,7 @@ fun GetSetScreen(){
                     .height(56.dp),
                 colors= ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00),
-                    contentColor = Color(0xFFFB7D092)
+                    contentColor = Color(0xFFFFFFEFE)
                 )
             )
             {
