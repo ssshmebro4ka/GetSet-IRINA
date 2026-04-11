@@ -5,6 +5,7 @@ import android.content.Context
 import android.widget.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -66,27 +67,27 @@ fun MyPurpose(){
             modifier = Modifier
                 .fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SelectableButton(text="Стать сильнее",
             isSelected= isOption1Selected,
-            onClick={isOption1Selected=!isOption1Selected}
+            onClick={isOption1Selected=!isOption1Selected},
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SelectableButton(text="Улучшить здоровье",
             isSelected= isOption2Selected,
             onClick={isOption2Selected=!isOption2Selected}
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SelectableButton(text="Сбросить вес",
             isSelected= isOption3Selected,
             onClick={isOption3Selected=!isOption3Selected}
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SelectableButton(text="Стать стройным и рельефным",
             isSelected= isOption4Selected,
             onClick={isOption4Selected=!isOption4Selected}
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SelectableButton(text="Набрать мышечную массу",
             isSelected= isOption5Selected,
             onClick={isOption5Selected=!isOption5Selected}
@@ -94,7 +95,8 @@ fun MyPurpose(){
         Spacer(modifier = Modifier.height(48.dp))
         Button(onClick = {},
             enabled = isOneChoose,
-            modifier = Modifier.fillMaxWidth(0.6f)
+            modifier = Modifier.fillMaxWidth(1f)
+
         ) {
             Text(text = "Далее", fontSize = 18.sp)
         }
@@ -102,9 +104,14 @@ fun MyPurpose(){
 }
 
 @Composable
-fun SelectableButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
+fun SelectableButton(text: String,
+                     isSelected: Boolean,
+                     onClick: () -> Unit,
+                     modifier: Modifier= Modifier
+) {
     Button(onClick=onClick,
-        modifier = Modifier.fillMaxWidth(0.8f),
+        modifier = Modifier.fillMaxWidth(1f)
+            .height(80.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = if(isSelected) Color(0xFFF117C00) else Color(0xFF9E9E9E),
@@ -115,19 +122,25 @@ fun SelectableButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
             pressedElevation = 4.dp
         )
     ) {
-        Row(
+        Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomStart
+        ) {
+            Row(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
-        ){
-            if (isSelected){
-                Icon(
-                    painter = painterResource(id = android.R.drawable.checkbox_on_background),
-                    contentDescription = " ",
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-            }
-            Text(text,fontSize=16.sp)
+    ){
+        if (isSelected){
+            Icon(
+                painter = painterResource(id = android.R.drawable.checkbox_on_background),
+                contentDescription = " ",
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
         }
+        Text(text,fontSize=16.sp)
+    }
+        }
+
     }
 }
