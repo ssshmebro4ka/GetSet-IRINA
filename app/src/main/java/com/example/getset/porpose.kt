@@ -1,5 +1,6 @@
 package com.example.getset
 
+import android.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Button
@@ -96,9 +97,17 @@ fun MyPurpose(){
         Button(onClick = {},
             enabled = isOneChoose,
             modifier = Modifier.fillMaxWidth(1f)
-
+                                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor =  Color(0xFFF117C00),
+                disabledContentColor = Color(0xFFF117C00),
+                contentColor = Color.White,
+                disabledContainerColor = Color(0xFFFB7D092)
+            )
         ) {
-            Text(text = "Далее", fontSize = 18.sp)
+            Text(
+                text = "Далее",
+                fontSize = 18.sp)
         }
     }
 }
@@ -114,8 +123,8 @@ fun SelectableButton(text: String,
             .height(80.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = if(isSelected) Color(0xFFF117C00) else Color(0xFF9E9E9E),
-            disabledContentColor = Color(0xFF9E9E9E)
+            containerColor = if(isSelected) Color(0xFFF117C00) else Color(0xFFFB7D092),
+
         ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 0.dp,
@@ -132,13 +141,20 @@ fun SelectableButton(text: String,
     ){
         if (isSelected){
             Icon(
+
                 painter = painterResource(id = android.R.drawable.checkbox_on_background),
                 contentDescription = " ",
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(20.dp),
+                tint = Color.White
+
             )
             Spacer(modifier = Modifier.width(8.dp))
         }
-        Text(text,fontSize=16.sp)
+        Text(text,
+            fontSize=16.sp,
+            color=if(isSelected) Color.White else Color(0xFFF117C00)
+
+        )
     }
         }
 
