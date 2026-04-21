@@ -1,5 +1,4 @@
-package com.example.getset
-
+package com.example.getset.ui.theme
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -32,20 +31,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.getset.R
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun MyPurpose(){
+fun Warning(){
     var isOption1Selected  by remember { mutableStateOf(false) }
     var isOption2Selected  by remember { mutableStateOf(false) }
     var isOption3Selected  by remember { mutableStateOf(false) }
     var isOption4Selected  by remember { mutableStateOf(false) }
     var isOption5Selected  by remember { mutableStateOf(false) }
+    var isOption6Selected  by remember { mutableStateOf(false) }
     val isOneChoose= (isOption1Selected ||isOption2Selected ||isOption3Selected||isOption4Selected||isOption5Selected)
     Column (modifier = Modifier
         .background(androidx.compose.ui.graphics.Color.White)
         .fillMaxSize()
-        .padding(24.dp),
+        .padding(24.dp),//спина руки грудь ноги ягодицы все тело
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ){
@@ -59,7 +60,7 @@ fun MyPurpose(){
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(15.dp))
-        Text(text="Выберите цель",
+        Text(text="Выберите область внимания",
             fontSize = 30.sp,
             fontWeight= FontWeight.Medium,
             color= Color(0xFFF117C00),
@@ -67,35 +68,40 @@ fun MyPurpose(){
                 .fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButton(text="Стать сильнее",
+        SelectableButton(text="Спина",
             isSelected= isOption1Selected,
             onClick={isOption1Selected=!isOption1Selected},
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButton(text="Улучшить здоровье",
+        SelectableButton(text="Руки",
             isSelected= isOption2Selected,
             onClick={isOption2Selected=!isOption2Selected}
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButton(text="Сбросить вес",
+        SelectableButton(text="Грудь",
             isSelected= isOption3Selected,
             onClick={isOption3Selected=!isOption3Selected}
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButton(text="Стать стройным и рельефным",
+        SelectableButton(text="Ноги",
             isSelected= isOption4Selected,
             onClick={isOption4Selected=!isOption4Selected}
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButton(text="Набрать мышечную массу",
+        SelectableButton(text="Ягодицы",
             isSelected= isOption5Selected,
             onClick={isOption5Selected=!isOption5Selected}
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        SelectableButton(text="Пресс",
+            isSelected= isOption6Selected,
+            onClick={isOption6Selected=!isOption6Selected}
         )
         Spacer(modifier = Modifier.height(48.dp))
         Button(onClick = {},
             enabled = isOneChoose,
             modifier = Modifier.fillMaxWidth(1f)
-                                .height(50.dp),
+                .height(50.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor =  Color(0xFFF117C00),
                 disabledContentColor = Color(0xFFF117C00),
@@ -118,40 +124,40 @@ fun SelectableButton(text: String,
 ) {
     Button(onClick=onClick,
         modifier = Modifier.fillMaxWidth(1f)
-            .height(80.dp),
+            .height(70.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = if(isSelected) Color(0xFFF117C00) else Color(0xFFFB7D092),
 
-        ),
+            ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 0.dp,
             pressedElevation = 4.dp
         )
     ) {
         Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomStart
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.BottomStart
         ) {
             Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-    ){
-        if (isSelected){
-            Icon(
-                painter = painterResource(id = R.drawable.group),
-                contentDescription = " ",
-                modifier = Modifier.size(20.dp),
-                tint = Color.White
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                if (isSelected){
+                    Icon(
+                        painter = painterResource(id = R.drawable.group),
+                        contentDescription = " ",
+                        modifier = Modifier.size(20.dp),
+                        tint = Color.White
 
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-        }
-        Text(text,
-            fontSize=20.sp,
-            color=if(isSelected) Color.White else Color(0xFFF117C00)
-        )
-    }
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
+                Text(text,
+                    fontSize=20.sp,
+                    color=if(isSelected) Color.White else Color(0xFFF117C00)
+                )
+            }
         }
 
     }
