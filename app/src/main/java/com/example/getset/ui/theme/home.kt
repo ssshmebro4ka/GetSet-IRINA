@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,6 +19,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +35,8 @@ import com.example.getset.R
 
 @Composable
 fun HomeScreen(){
+    var selectedItem by remember { mutableStateOf(0) }
+    val items=listOf("S")//navigation bar
     Column (
         modifier = Modifier
             .background(Color.White)
@@ -55,6 +62,7 @@ fun HomeScreen(){
             modifier = Modifier
                 .fillMaxWidth()
         )
+        Spacer(modifier = Modifier.height(10.dp))
         Button(onClick = {},
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFFF117C00)
@@ -70,12 +78,133 @@ fun HomeScreen(){
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) { Text(
-                text = "Здра",
-                fontSize = 35.sp,
+                text = "Готовые тренировки",
+                fontSize = 28.sp,
                 fontWeight= FontWeight.Medium,
                 color= Color.White,
                 modifier = Modifier
-                    .fillMaxWidth()
+
+            )
+                Icon(painter = painterResource(id = R.drawable.vector),
+                    contentDescription = " ",
+                    modifier = Modifier.size(20.dp),
+                    tint = Color.White
+                )
+            }
+
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFF117C00)
+            ),
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+
+            ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(
+                text = "Мои тренировки",
+                fontSize = 28.sp,
+                fontWeight= FontWeight.Medium,
+                color= Color.White,
+                modifier = Modifier
+
+            )
+                Icon(painter = painterResource(id = R.drawable.vector),
+                    contentDescription = " ",
+                    modifier = Modifier.size(20.dp),
+                    tint = Color.White
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFF117C00)
+            ),
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+
+            ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(
+                text = "Упражнения",
+                fontSize = 28.sp,
+                fontWeight= FontWeight.Medium,
+                color= Color.White,
+                modifier = Modifier
+
+            )
+                Icon(painter = painterResource(id = R.drawable.vector),
+                    contentDescription = " ",
+                    modifier = Modifier.size(20.dp),
+                    tint = Color.White
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFF117C00)
+            ),
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+
+            ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(
+                text = "Мои достижения",
+                fontSize = 28.sp,
+                fontWeight= FontWeight.Medium,
+                color= Color.White,
+                modifier = Modifier
+
+            )
+                Icon(painter = painterResource(id = R.drawable.vector),
+                    contentDescription = " ",
+                    modifier = Modifier.size(20.dp),
+                    tint = Color.White
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(onClick = {},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFF117C00)
+            ),
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+
+            ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(
+                text = "Секундомер",
+                fontSize = 28.sp,
+                fontWeight= FontWeight.Medium,
+                color= Color.White,
+                modifier = Modifier
+
             )
                 Icon(painter = painterResource(id = R.drawable.vector),
                     contentDescription = " ",

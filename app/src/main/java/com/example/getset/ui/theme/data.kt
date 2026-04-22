@@ -14,6 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -31,12 +35,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Datab(){
+fun DataB(){
     var gender by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
     var myweight by remember { mutableStateOf("") }
     var wantweight by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+    val genderOptions= listOf("Жеснский","Мужской")
     val isFormValid by remember {
         derivedStateOf {
             gender.isNotBlank() && height.isNotBlank() && myweight.isNotBlank() && wantweight.isNotBlank()
@@ -69,21 +76,46 @@ fun Datab(){
                     .fillMaxWidth()
                     .padding(top = 15.dp),
             )
-            OutlinedTextField(
-                value = gender,
-                onValueChange = {gender=it},
-                label={ Text("Введите пол", fontSize = 20.sp)},
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = Color(0xFFFE7F4D2),
-                    focusedContainerColor  = Color(0xFFFA1D05A),
-                    focusedLabelColor = Color(0xFFF117C00),
-                    unfocusedLabelColor = Color(0xFFF117C00),
-                    focusedBorderColor = Color(0xFFF117C00),
-                    unfocusedBorderColor = Color(0xFFF117C00)
-                ),
-                shape= RoundedCornerShape(15.dp),
-                modifier = Modifier.fillMaxWidth()
-            )
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = {expanded=it}) {
+                OutlinedTextField(
+                    value = gender,
+                    onValueChange = {},
+                    readOnly = true,
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)},
+                    label={ Text("Введите пол", fontSize = 20.sp)},
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedContainerColor = Color(0xFFFE7F4D2),
+                        focusedContainerColor  = Color(0xFFFA1D05A),
+                        focusedLabelColor = Color(0xFFF117C00),
+                        unfocusedLabelColor = Color(0xFFF117C00),
+                        focusedBorderColor = Color(0xFFF117C00),
+                        unfocusedBorderColor = Color(0xFFF117C00)
+                    ),
+
+                    shape= RoundedCornerShape(15.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor()
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = {expanded=false},
+                    modifier = Modifier.background(Color(0xFFFE7F4D2))
+                ) {
+                    genderOptions.forEach { option->
+                        DropdownMenuItem(
+                            text={Text(option, fontSize = 18.sp)},
+                            onClick = {
+                                gender=option
+                                expanded=false
+                            }
+                        )
+                    }
+                }
+            }
+
             Text(
                 text = "Рост",
                 fontSize = 45.sp,
@@ -142,8 +174,8 @@ fun Datab(){
                     .padding(top = 15.dp),
             )
             OutlinedTextField(
-                value = gender,
-                onValueChange = {gender=it},
+                value = wantweight,
+                onValueChange = {wantweight=it},
                 label={ Text("Введите желаемый вес", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
@@ -175,7 +207,7 @@ fun Datab(){
 
                 )
             {
-                Text(text="Зарегистрироваться",
+                Text(text="Далее",
                     fontSize =20.sp)
             }
         }
