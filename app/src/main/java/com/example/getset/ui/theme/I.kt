@@ -1,10 +1,7 @@
 package com.example.getset.ui.theme
 
-import android.R.attr.fontWeight
-import android.R.attr.onClick
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -33,13 +29,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.getset.R
 
 @Composable
-fun HomeScreen() {
+fun IScreen() {
     var selectedItem by remember { mutableStateOf(0) }
     val items = listOf("Главная", "Я")//navigation bar
     val selectedIcons = listOf(
@@ -55,11 +50,11 @@ fun HomeScreen() {
             items.forEachIndexed { index, item -> NavigationBarItem(
                 icon = {
                     Icon(
-                    painter = if(selectedItem==index) selectedIcons[index] else unselectedIcons[index],
-                    contentDescription = item,
-                    modifier = Modifier.size(24.dp),
+                        painter = if(selectedItem==index) selectedIcons[index] else unselectedIcons[index],
+                        contentDescription = item,
+                        modifier = Modifier.size(24.dp),
                         tint = if (selectedItem == index) Color.White else Color(0xFFF79A326)
-                )
+                    )
                 },
                 label = {
                     Text(
@@ -75,7 +70,7 @@ fun HomeScreen() {
                     selectedTextColor = Color(0xFFF117C00),
                     unselectedTextColor = Color.White,
                     indicatorColor = Color.Transparent)
-                )
+            )
             }
         }
         }
@@ -98,15 +93,16 @@ fun HomeScreen() {
                     .fillMaxWidth()
 
             )
+            Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = "Здравствуйте, Login",
+                text = "Login",
                 fontSize = 35.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(70.dp))
             Button(
                 onClick = {},
                 colors = ButtonDefaults.buttonColors(
@@ -124,8 +120,8 @@ fun HomeScreen() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Готовые тренировки",
-                        fontSize = 28.sp,
+                        text = "Изменить цель",
+                        fontSize = 23.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
                         modifier = Modifier
@@ -158,7 +154,7 @@ fun HomeScreen() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Мои тренировки",
+                        text = "Изменить параметры тела",
                         fontSize = 23.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
@@ -191,7 +187,7 @@ fun HomeScreen() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Упражнения",
+                        text = "Избранные упражнения",
                         fontSize = 23.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
@@ -224,40 +220,7 @@ fun HomeScreen() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Мои достижения",
-                        fontSize = 23.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.White,
-                        modifier = Modifier
-
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.vector),
-                        contentDescription = " ",
-                        modifier = Modifier.size(20.dp),
-                        tint = Color.White
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(15.dp))
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFF117C00)
-                ),
-                shape = RoundedCornerShape(10.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-
-                ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "Секундомер",
+                        text = "Избранные упражнения",
                         fontSize = 23.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
@@ -274,6 +237,4 @@ fun HomeScreen() {
             }
         }
     }
-
-
 }
