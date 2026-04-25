@@ -102,7 +102,7 @@ fun IScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             Button(
                 onClick = {},
                 colors = ButtonDefaults.buttonColors(
@@ -121,7 +121,7 @@ fun IScreen() {
                 ) {
                     Text(
                         text = "Изменить цель",
-                        fontSize = 23.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
                         modifier = Modifier
@@ -155,7 +155,40 @@ fun IScreen() {
                 ) {
                     Text(
                         text = "Изменить параметры тела",
-                        fontSize = 23.sp,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White,
+                        modifier = Modifier
+
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.vector),
+                        contentDescription = " ",
+                        modifier = Modifier.size(20.dp),
+                        tint = Color.White
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(15.dp))
+            Button(
+                onClick = {},
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFF117C00)
+                ),
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+
+                ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Изменить область внимания",
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
                         modifier = Modifier
@@ -188,7 +221,7 @@ fun IScreen() {
                 ) {
                     Text(
                         text = "Избранные упражнения",
-                        fontSize = 23.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
                         modifier = Modifier
@@ -220,8 +253,8 @@ fun IScreen() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Избранные упражнения",
-                        fontSize = 23.sp,
+                        text = "Избранные тренировки",
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
                         modifier = Modifier
