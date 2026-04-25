@@ -1,9 +1,5 @@
 package com.example.getset.ui.theme
 
-import com.example.getset.R
-
-
-
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,20 +34,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.getset.R
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun MyChangePurpose(onBackClick:()-> Unit={}){
+fun ChangeWarning(onBackClick:()-> Unit={}){
     var isOption1Selected  by remember { mutableStateOf(false) }
     var isOption2Selected  by remember { mutableStateOf(false) }
     var isOption3Selected  by remember { mutableStateOf(false) }
     var isOption4Selected  by remember { mutableStateOf(false) }
     var isOption5Selected  by remember { mutableStateOf(false) }
+    var isOption6Selected  by remember { mutableStateOf(false) }
     val isOneChoose= (isOption1Selected ||isOption2Selected ||isOption3Selected||isOption4Selected||isOption5Selected)
     Column (modifier = Modifier
         .background(androidx.compose.ui.graphics.Color.White)
         .fillMaxSize()
-        .padding(40.dp),
+        .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ){
@@ -68,11 +66,9 @@ fun MyChangePurpose(onBackClick:()-> Unit={}){
                     modifier = Modifier.size(45.dp)
                 )
             }
-
         }
-
         Spacer(modifier = Modifier.height(30.dp))
-        Text(text="Выберите новую цель",
+        Text(text="Выберите область внимания",
             fontSize = 30.sp,
             fontWeight= FontWeight.Medium,
             color= Color(0xFFF117C00),
@@ -80,29 +76,34 @@ fun MyChangePurpose(onBackClick:()-> Unit={}){
                 .fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonCh(text="Стать сильнее",
+        SelectableButtonGhWar(text="Спина",
             isSelected= isOption1Selected,
             onClick={isOption1Selected=!isOption1Selected},
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonCh(text="Улучшить здоровье",
+        SelectableButtonGhWar(text="Руки",
             isSelected= isOption2Selected,
             onClick={isOption2Selected=!isOption2Selected}
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonCh(text="Сбросить вес",
+        SelectableButtonGhWar(text="Грудь",
             isSelected= isOption3Selected,
             onClick={isOption3Selected=!isOption3Selected}
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonCh(text="Стать стройным и рельефным",
+        SelectableButtonGhWar(text="Ноги",
             isSelected= isOption4Selected,
             onClick={isOption4Selected=!isOption4Selected}
         )
         Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonCh(text="Набрать мышечную массу",
+        SelectableButtonGhWar(text="Ягодицы",
             isSelected= isOption5Selected,
             onClick={isOption5Selected=!isOption5Selected}
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        SelectableButtonGhWar(text="Пресс",
+            isSelected= isOption6Selected,
+            onClick={isOption6Selected=!isOption6Selected}
         )
         Spacer(modifier = Modifier.height(48.dp))
         Button(onClick = {},
@@ -117,21 +118,21 @@ fun MyChangePurpose(onBackClick:()-> Unit={}){
             )
         ) {
             Text(
-                text = "Сохранить",
+                text = "Далее",
                 fontSize = 20.sp)
         }
     }
 }
 
 @Composable
-fun SelectableButtonCh(text: String,
+fun SelectableButtonGhWar(text: String,
                      isSelected: Boolean,
                      onClick: () -> Unit,
                      modifier: Modifier= Modifier
 ) {
     Button(onClick=onClick,
         modifier = Modifier.fillMaxWidth(1f)
-            .height(80.dp),
+            .height(70.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = if(isSelected) Color(0xFFF117C00) else Color(0xFFFB7D092),
@@ -166,5 +167,6 @@ fun SelectableButtonCh(text: String,
                 )
             }
         }
+
     }
 }

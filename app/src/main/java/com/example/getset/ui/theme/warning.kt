@@ -46,7 +46,7 @@ fun Warning(){
     Column (modifier = Modifier
         .background(androidx.compose.ui.graphics.Color.White)
         .fillMaxSize()
-        .padding(24.dp),//спина руки грудь ноги ягодицы все тело
+        .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ){
