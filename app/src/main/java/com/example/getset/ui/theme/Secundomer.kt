@@ -26,8 +26,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.getset.R
+import com.example.getset.painter
 import kotlinx.coroutines.delay
 
 @Composable
@@ -50,7 +53,7 @@ fun Secundomer(){
         Surface (
             modifier = Modifier.size(200.dp),
             shape = CircleShape,
-            color = MaterialTheme.colorScheme.primaryContainer,
+            color = Color(0xFFF117C00) ,
             shadowElevation = 4.dp
         ){
             Column (
@@ -61,22 +64,22 @@ fun Secundomer(){
                 Text(
                     text = String.format("%02d", minutes),
                     fontSize = 36.sp,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = Color.White
                 )
                 Text(
                     text = "мин",
                     fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer .copy(alpha = 0.7f)
+                    color =Color.White.copy(alpha = 0.7f)
                 )
                 Text(
                     text = String.format("%02d", seconds),
                     fontSize = 48.sp,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = Color.White
                 )
                 Text(
                     text ="сек",
                     fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha=0.7f)
+                    color =Color.White.copy(alpha=0.7f)
                 )
             }
         }
@@ -87,20 +90,27 @@ fun Secundomer(){
                     isRunning=false
                     timeInSeconds=0
                 },
-                containerColor = MaterialTheme.colorScheme.secondaryContainer
+                containerColor = Color(0xFFFE7F4D2)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = "Сброс"
+                    painterResource(R.drawable.refresh),
+                    contentDescription = "Сброс",
+                    tint = Color(0xFFF117C00)
+
                 )
             }
             FloatingActionButton(
-                onClick = {isRunning != isRunning},
-                containerColor = if(!isRunning) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                onClick = {isRunning =! isRunning},
+                containerColor = if(!isRunning) Color(0xFFFE7F4D2) else Color(0xFFF117C00)
             ) {
                 Icon(
-                    imageVector = if(!isRunning) Icons.Default.PlayArrow else Icons.Default.Person,
-                    contentDescription = if(!isRunning) "Старт" else "Пауза"
+                    painter = if (!isRunning){
+                        painterResource(R.drawable.play)
+                    }else{
+                        painterResource(R.drawable.pause2)
+                    },
+                    contentDescription = if(!isRunning) "Старт" else "Пауза",
+                    tint = if (!isRunning) Color(0xFFF117C00) else Color.White
                 )
             }
         }
