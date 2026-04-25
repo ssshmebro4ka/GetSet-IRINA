@@ -1,7 +1,5 @@
 package com.example.getset.ui.theme
 
-import android.R.attr.password
-import android.R.attr.text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,13 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DataB(){
+fun DataB(navController: NavHostController) {
     var gender by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
     var myweight by remember { mutableStateOf("") }
@@ -192,7 +190,11 @@ fun DataB(){
             Button(onClick = {
                 if(isFormValid){
                     println("Регистрация:$gender/$height/$myweight/$wantweight")
+                    navController.navigate(Screen.DataB.route){
+                        popUpTo(Screen.Registration.route) { inclusive = true }
+                    }
                 }
+
             },
                 enabled = isFormValid,
                 modifier = Modifier

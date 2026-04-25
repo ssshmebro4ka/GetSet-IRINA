@@ -1,16 +1,11 @@
 package com.example.getset
 
-import SignInScreen
-import android.R
-import android.R.attr.contentDescription
-import android.R.attr.enabled
-import android.R.attr.fontWeight
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,16 +16,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -41,15 +31,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.getset.ui.theme.AppNavigation
+import com.example.getset.ui.theme.DataB
 import com.example.getset.ui.theme.GetSetTheme
-import java.lang.Compiler.enable
+import com.example.getset.ui.theme.Screen
+
 
 lateinit var painter: Painter
 
@@ -59,8 +51,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GetSetTheme {
-                ///GetSetScreen()
-                SignInScreen()
+                AppNavigation()
+                //val navController = rememberNavController()
+                //GetSetScreen(navController = navController)
+                //SignInScreen(navController = navController)
+                //MyPurpose(navController = navController)
+                //Warning(navController = navController)
+                //DataB(navController = navController)
+                //HomeScreen(navController = navController)
+                //IScreen(navController = navController)
+                //MyChangePurpose(navController = navController)
+                //ChangeWarning(navController = navController)
+                //DataBCh (navController = navController)
+                //Secundomer(navController = navController)
             }
         }
     }
@@ -68,7 +71,7 @@ class MainActivity : ComponentActivity() {
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun GetSetScreen(){
+fun GetSetScreen(navController: NavHostController) {
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val isFormValid by remember {
@@ -86,6 +89,7 @@ fun GetSetScreen(){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
             ){
+
             Text(
                 text = "GetSet",
                 fontSize = 64.sp,
@@ -96,7 +100,7 @@ fun GetSetScreen(){
                     .padding(top = 50.dp),
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.height(48.dp))
+
             Text(
                 text = "Регистрация",
                 fontSize = 32.sp,
@@ -143,6 +147,9 @@ fun GetSetScreen(){
             Button(onClick = {
                 if(isFormValid){
                     println("Регистрация:$login/$password")
+                    navController.navigate(Screen.MyPurpose.route){
+                        popUpTo(Screen.Registration.route) { inclusive = true }
+                    }
                 }
             },
                 enabled = isFormValid,
@@ -167,7 +174,9 @@ fun GetSetScreen(){
                 color=Color(0xFFF117C00)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            Button(onClick = {},
+            Button(onClick = {navController.navigate(Screen.SignIn.route) {
+                popUpTo(Screen.Registration.route) { inclusive = true }
+            }},
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),

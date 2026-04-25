@@ -31,18 +31,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.getset.R
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun Warning(){
+fun Warning(navController: NavHostController) {
     var isOption1Selected  by remember { mutableStateOf(false) }
     var isOption2Selected  by remember { mutableStateOf(false) }
     var isOption3Selected  by remember { mutableStateOf(false) }
     var isOption4Selected  by remember { mutableStateOf(false) }
     var isOption5Selected  by remember { mutableStateOf(false) }
     var isOption6Selected  by remember { mutableStateOf(false) }
-    val isOneChoose= (isOption1Selected ||isOption2Selected ||isOption3Selected||isOption4Selected||isOption5Selected)
+    val isOneChoose= (isOption1Selected ||isOption2Selected ||isOption3Selected||isOption4Selected||isOption5Selected||isOption6Selected)
+
     Column (modifier = Modifier
         .background(androidx.compose.ui.graphics.Color.White)
         .fillMaxSize()
@@ -98,7 +100,9 @@ fun Warning(){
             onClick={isOption6Selected=!isOption6Selected}
         )
         Spacer(modifier = Modifier.height(48.dp))
-        Button(onClick = {},
+        Button(onClick = {navController.navigate(Screen.DataB.route){
+            popUpTo(Screen.Registration.route) { inclusive = true }
+        }},
             enabled = isOneChoose,
             modifier = Modifier.fillMaxWidth(1f)
                 .height(50.dp),

@@ -50,6 +50,7 @@ fun Secundomer(onBackClick:()-> Unit={}){
     }
     val minutes= timeInSeconds/60
     val seconds=timeInSeconds%60
+
     Column (
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

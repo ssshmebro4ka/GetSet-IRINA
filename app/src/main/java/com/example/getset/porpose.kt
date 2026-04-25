@@ -32,10 +32,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.getset.ui.theme.Screen
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun MyPurpose(){
+fun MyPurpose(navController: NavHostController) {
     var isOption1Selected  by remember { mutableStateOf(false) }
     var isOption2Selected  by remember { mutableStateOf(false) }
     var isOption3Selected  by remember { mutableStateOf(false) }
@@ -92,7 +94,7 @@ fun MyPurpose(){
             onClick={isOption5Selected=!isOption5Selected}
         )
         Spacer(modifier = Modifier.height(48.dp))
-        Button(onClick = {},
+        Button(onClick = { navController.navigate(Screen.Warning.route)},
             enabled = isOneChoose,
             modifier = Modifier.fillMaxWidth(1f)
                                 .height(50.dp),
