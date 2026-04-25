@@ -1,19 +1,24 @@
 package com.example.getset.ui.theme
 
+import android.R.attr.y
 import androidx.compose.material3.Icon
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,7 +39,7 @@ import com.example.getset.painter
 import kotlinx.coroutines.delay
 
 @Composable
-fun Secundomer(){
+fun Secundomer(onBackClick:()-> Unit={}){
     var timeInSeconds by remember { mutableStateOf(0) }
     var isRunning by remember { mutableStateOf(false) }
     LaunchedEffect(isRunning) {
@@ -50,8 +55,24 @@ fun Secundomer(){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Top
+        ){
+            IconButton(onClick = onBackClick,
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = " ",
+                    tint = Color(0xFFF117C00),
+                    modifier = Modifier.size(45.dp)
+                )
+            }
+
+        }
         Surface (
-            modifier = Modifier.size(200.dp),
+            modifier = Modifier.size(300.dp),
             shape = CircleShape,
             color = Color(0xFFF117C00) ,
             shadowElevation = 4.dp
@@ -63,7 +84,7 @@ fun Secundomer(){
             ){
                 Text(
                     text = String.format("%02d", minutes),
-                    fontSize = 36.sp,
+                    fontSize = 60.sp,
                     color = Color.White
                 )
                 Text(
@@ -73,7 +94,7 @@ fun Secundomer(){
                 )
                 Text(
                     text = String.format("%02d", seconds),
-                    fontSize = 48.sp,
+                    fontSize = 70.sp,
                     color = Color.White
                 )
                 Text(
