@@ -51,7 +51,7 @@ fun MyChangePurpose(onBackClick:()-> Unit={}){
     Column (modifier = Modifier
         .background(androidx.compose.ui.graphics.Color.White)
         .fillMaxSize()
-        .padding(24.dp),
+        .padding(40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ){
@@ -68,18 +68,10 @@ fun MyChangePurpose(onBackClick:()-> Unit={}){
                     modifier = Modifier.size(45.dp)
                 )
             }
-            Spacer(modifier = Modifier.weight(1f))
+
         }
-        Text(text="GetSet",
-            fontSize = 64.sp,
-            fontWeight= FontWeight.Bold,
-            color= Color(0xFFF117C00),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 50.dp),
-            textAlign = TextAlign.Center
-        )
-        Spacer(modifier = Modifier.height(15.dp))
+
+        Spacer(modifier = Modifier.height(30.dp))
         Text(text="Выберите новую цель",
             fontSize = 30.sp,
             fontWeight= FontWeight.Medium,
