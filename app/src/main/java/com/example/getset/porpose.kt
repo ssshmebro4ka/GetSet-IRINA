@@ -94,7 +94,9 @@ fun MyPurpose(navController: NavHostController) {
             onClick={isOption5Selected=!isOption5Selected}
         )
         Spacer(modifier = Modifier.height(48.dp))
-        Button(onClick = { navController.navigate(Screen.Warning.route)},
+        Button(onClick = { navController.navigate(Screen.Warning.route){
+            popUpTo(0){inclusive=true}
+        } },
             enabled = isOneChoose,
             modifier = Modifier.fillMaxWidth(1f)
                                 .height(50.dp),

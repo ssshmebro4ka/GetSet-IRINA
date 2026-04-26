@@ -31,19 +31,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.getset.R
 
 @Composable
-fun IScreen() {
-    var selectedItem by remember { mutableStateOf(0) }
+fun IScreen(navController: NavHostController) {
+    var selectedItem by remember { mutableStateOf(1) }
     val items = listOf("Главная", "Я")//navigation bar
     val selectedIcons = listOf(
-        painterResource(id = R.drawable.i),
-        painterResource(id = R.drawable.home)
+        painterResource(id = R.drawable.home),
+        painterResource(id = R.drawable.i)
     )
     val unselectedIcons = listOf(
-        painterResource(id = R.drawable.i),
-        painterResource(id = R.drawable.home)
+        painterResource(id = R.drawable.home),
+        painterResource(id = R.drawable.i)
     )
     Scaffold(
         bottomBar = {NavigationBar (containerColor = Color(0xFFF117C00)){
@@ -63,7 +64,11 @@ fun IScreen() {
                     )
                 },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index },
+                onClick = { selectedItem = index
+                          when(index){
+                             0->{navController.navigate(Screen.Home.route)}
+                             1->{}
+                          } },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color.White,
                     unselectedIconColor = Color.White,

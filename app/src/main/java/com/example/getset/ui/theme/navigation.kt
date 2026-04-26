@@ -14,6 +14,8 @@ sealed class Screen(val route: String) {
     object MyPurpose : Screen("my_purpose")
     object Warning: Screen("warning")
     object DataB: Screen("data")
+    object Home: Screen("home")
+    object Profile: Screen("profile")
 }
 @Composable
 fun AppNavigation() {
@@ -36,7 +38,13 @@ fun AppNavigation() {
             Warning(navController=navController)
         }
         composable(Screen.DataB.route){
-            Warning(navController=navController)
+            DataB(navController=navController)
+        }
+        composable(Screen.Home.route){
+            HomeScreen(navController=navController)
+        }
+        composable(Screen.Profile.route){
+            IScreen(navController=navController)
         }
     }
 }

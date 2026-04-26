@@ -101,7 +101,7 @@ fun Warning(navController: NavHostController) {
         )
         Spacer(modifier = Modifier.height(48.dp))
         Button(onClick = {navController.navigate(Screen.DataB.route){
-            popUpTo(Screen.Registration.route) { inclusive = true }
+            popUpTo(0) { inclusive = true }
         }},
             enabled = isOneChoose,
             modifier = Modifier.fillMaxWidth(1f)

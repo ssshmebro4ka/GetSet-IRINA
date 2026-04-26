@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.getset.ui.theme.Screen
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
@@ -106,6 +107,9 @@ fun SignInScreen(navController: NavHostController) {
             Button(onClick = {
                 if(isFormValid){
                     println("Регистрация:$login/$password")
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
                 }
             },
                 enabled = isFormValid,

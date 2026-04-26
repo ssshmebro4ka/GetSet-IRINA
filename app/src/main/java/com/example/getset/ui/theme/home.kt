@@ -1,10 +1,7 @@
 package com.example.getset.ui.theme
 
-import android.R.attr.fontWeight
-import android.R.attr.onClick
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -33,22 +29,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.getset.R
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
     var selectedItem by remember { mutableStateOf(0) }
     val items = listOf("Главная", "Я")//navigation bar
     val selectedIcons = listOf(
-        painterResource(id = R.drawable.i),
-        painterResource(id = R.drawable.home)
+        painterResource(id = R.drawable.home),
+        painterResource(id = R.drawable.i)
     )
     val unselectedIcons = listOf(
-        painterResource(id = R.drawable.i),
-        painterResource(id = R.drawable.home)
+        painterResource(id = R.drawable.home),
+        painterResource(id = R.drawable.i)
     )
     Scaffold(
         bottomBar = {NavigationBar (containerColor = Color(0xFFF117C00)){
@@ -68,7 +64,15 @@ fun HomeScreen() {
                     )
                 },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index },
+                onClick = {
+                    selectedItem=index
+                    when(index){
+                        0->{}
+                        1->{
+                            navController.navigate(Screen.Profile.route)
+                        }
+                    }
+                },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color.White,
                     unselectedIconColor = Color.White,

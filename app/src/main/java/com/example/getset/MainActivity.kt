@@ -175,7 +175,6 @@ fun GetSetScreen(navController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(20.dp))
             Button(onClick = {navController.navigate(Screen.SignIn.route) {
-                popUpTo(Screen.Registration.route) { inclusive = true }
             }},
                 modifier = Modifier
                     .fillMaxWidth()

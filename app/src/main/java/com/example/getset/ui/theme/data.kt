@@ -41,7 +41,7 @@ fun DataB(navController: NavHostController) {
     var myweight by remember { mutableStateOf("") }
     var wantweight by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
-    val genderOptions= listOf("Жеснский","Мужской")
+    val genderOptions= listOf("Женский","Мужской")
     val isFormValid by remember {
         derivedStateOf {
             gender.isNotBlank() && height.isNotBlank() && myweight.isNotBlank() && wantweight.isNotBlank()
@@ -190,8 +190,8 @@ fun DataB(navController: NavHostController) {
             Button(onClick = {
                 if(isFormValid){
                     println("Регистрация:$gender/$height/$myweight/$wantweight")
-                    navController.navigate(Screen.DataB.route){
-                        popUpTo(Screen.Registration.route) { inclusive = true }
+                    navController.navigate(Screen.Home.route){
+                        popUpTo(0) { inclusive = true }
                     }
                 }
 
