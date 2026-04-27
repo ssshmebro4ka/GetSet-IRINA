@@ -92,7 +92,7 @@ fun MyPurpose(navController: NavHostController) {
         SelectableButton(text="Набрать мышечную массу",
             isSelected= isOption5Selected,
             onClick={isOption5Selected=!isOption5Selected}
-        )
+    )
         Spacer(modifier = Modifier.height(48.dp))
         Button(onClick = { navController.navigate(Screen.Warning.route){
             popUpTo(0){inclusive=true}

@@ -112,7 +112,7 @@ fun HomeScreen(navController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.MyReadyTrain.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -146,7 +146,7 @@ fun HomeScreen(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.MyTrain.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -179,7 +179,7 @@ fun HomeScreen(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.Exersize.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -212,7 +212,7 @@ fun HomeScreen(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.MyPorpouseTrain.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -245,7 +245,7 @@ fun HomeScreen(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.Secundomer.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),

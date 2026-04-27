@@ -2,9 +2,10 @@ package com.example.getset.ui.theme
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 
 @Composable
-fun MyPorposeTrain(){
+fun MyPorposeTrain(navController: NavHostController) {
     Text(
         text = "мои достижения",
     )

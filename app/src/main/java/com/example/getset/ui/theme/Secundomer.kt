@@ -1,6 +1,5 @@
 package com.example.getset.ui.theme
 
-import android.R.attr.y
 import androidx.compose.material3.Icon
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,17 +8,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,12 +28,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.getset.R
-import com.example.getset.painter
 import kotlinx.coroutines.delay
 
 @Composable
-fun Secundomer(onBackClick:()-> Unit={}){
+fun Secundomer(onBackClick: () -> Unit = {}, navController: NavHostController){
     var timeInSeconds by remember { mutableStateOf(0) }
     var isRunning by remember { mutableStateOf(false) }
     LaunchedEffect(isRunning) {
@@ -60,7 +54,7 @@ fun Secundomer(onBackClick:()-> Unit={}){
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Top
         ){
-            IconButton(onClick = onBackClick,
+            IconButton(onClick = {navController.popBackStack() },
                 modifier = Modifier.size(48.dp)
             ) {
                 Icon(

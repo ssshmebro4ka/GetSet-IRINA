@@ -16,6 +16,12 @@ sealed class Screen(val route: String) {
     object DataB: Screen("data")
     object Home: Screen("home")
     object Profile: Screen("profile")
+    object MyReadyTrain: Screen("readytrain")
+    object MyTrain: Screen("mytrain")
+    object Exersize: Screen("exersize")
+    object MyPorpouseTrain: Screen("myporposetrain")
+    object Secundomer: Screen("secundomer")
+
 }
 @Composable
 fun AppNavigation() {
@@ -45,6 +51,21 @@ fun AppNavigation() {
         }
         composable(Screen.Profile.route){
             IScreen(navController=navController)
+        }
+        composable(Screen.MyReadyTrain.route){
+            ReadyTrain(navController)
+        }
+        composable(Screen.MyTrain.route){
+            MyTrain(navController=navController)
+        }
+        composable(Screen.Exersize.route){
+            Exersize(navController=navController)
+        }
+        composable(Screen.MyPorpouseTrain.route){
+            MyPorposeTrain(navController=navController)
+        }
+        composable(Screen.Secundomer.route){
+            Secundomer(navController=navController)
         }
     }
 }

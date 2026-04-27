@@ -2,10 +2,11 @@ package com.example.getset.ui.theme
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 
 @Composable
-fun Exersize(){
+fun Exersize(navController: NavHostController) {
     Text(
-        text = "Мои тренировки",
+        text = "упражнения",
     )
 }
