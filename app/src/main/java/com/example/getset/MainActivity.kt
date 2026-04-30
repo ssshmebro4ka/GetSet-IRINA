@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.getset.ui.theme.AppNavigation
@@ -74,11 +75,13 @@ class MainActivity : ComponentActivity() {
 fun GetSetScreen(navController: NavHostController) {
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var isNavigating by remember { mutableStateOf(false) }
     val isFormValid by remember {
         derivedStateOf {
             login.isNotBlank() && password.isNotBlank()
         }
     }
+    val lifecycleOwner = LocalLifecycleOwner.current
     Box(
         modifier = Modifier.fillMaxSize()
     ){
@@ -178,7 +181,7 @@ fun GetSetScreen(navController: NavHostController) {
             }},
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(56.dp), //эщкере
                 colors= ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00),
                     contentColor = Color(0xFFFFFFEFE)

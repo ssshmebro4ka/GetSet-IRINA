@@ -59,7 +59,7 @@ fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostControll
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ){
-            IconButton(onClick = onBackClick,
+            IconButton(onClick = {navController.popBackStack() },
                 modifier = Modifier.size(48.dp)) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,

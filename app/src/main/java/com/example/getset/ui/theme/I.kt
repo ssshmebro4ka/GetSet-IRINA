@@ -109,7 +109,7 @@ fun IScreen(navController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(30.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.ChangePorpose.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -143,7 +143,7 @@ fun IScreen(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.ChangeData.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -176,7 +176,7 @@ fun IScreen(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.ChangeWarning.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -209,7 +209,7 @@ fun IScreen(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.FavoriteEx.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -242,7 +242,7 @@ fun IScreen(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(Screen.FavoriteTrain.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),

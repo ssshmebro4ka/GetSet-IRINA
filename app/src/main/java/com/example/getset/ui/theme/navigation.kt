@@ -2,6 +2,7 @@ package com.example.getset.ui.theme
 
 import SignInScreen
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.rememberNavController
 import com.example.getset.GetSetScreen
 import androidx.navigation.compose.NavHost
@@ -21,12 +22,19 @@ sealed class Screen(val route: String) {
     object Exersize: Screen("exersize")
     object MyPorpouseTrain: Screen("myporposetrain")
     object Secundomer: Screen("secundomer")
+    object ChangePorpose: Screen("chageporpose")
+    object ChangeData: Screen("changedata")
+    object ChangeWarning: Screen("changewarning")
+    object FavoriteEx: Screen("favoriteexersize")
+    object FavoriteTrain: Screen("favoritetrain")
 
 }
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    LaunchedEffect(navController) {
 
+    }
     NavHost(
         navController = navController,
         startDestination = Screen.Registration.route
@@ -66,6 +74,21 @@ fun AppNavigation() {
         }
         composable(Screen.Secundomer.route){
             Secundomer(navController=navController)
+        }
+        composable(Screen.ChangePorpose.route){
+            MyChangePurpose(navController = navController)
+        }
+        composable(Screen.ChangeData.route){
+            DataBCh(navController = navController)
+        }
+        composable(Screen.ChangeWarning.route){
+            ChangeWarning(navController = navController)
+        }
+        composable(Screen.FavoriteEx.route){
+            FavoriteEx(navController = navController)
+        }
+        composable(Screen.FavoriteTrain.route){
+            FavoriteTrain(navController = navController)
         }
     }
 }

@@ -31,14 +31,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.getset.R
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun ChangeWarning(onBackClick:()-> Unit={}){
+fun ChangeWarning(onBackClick: () -> Unit = {}, navController: NavHostController){
     var isOption1Selected  by remember { mutableStateOf(false) }
     var isOption2Selected  by remember { mutableStateOf(false) }
     var isOption3Selected  by remember { mutableStateOf(false) }
@@ -57,7 +57,7 @@ fun ChangeWarning(onBackClick:()-> Unit={}){
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ){
-            IconButton(onClick = onBackClick,
+            IconButton(onClick = {navController.popBackStack() },
                 modifier = Modifier.size(48.dp)) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -118,7 +118,7 @@ fun ChangeWarning(onBackClick:()-> Unit={}){
             )
         ) {
             Text(
-                text = "Далее",
+                text = "Сохранить",
                 fontSize = 20.sp)
         }
     }

@@ -1,7 +1,5 @@
 package com.example.getset.ui.theme
 
-import android.R.attr.password
-import android.R.attr.text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,13 +35,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DataBCh(onBackClick:()-> Unit={}){
+fun DataBCh(onBackClick: () -> Unit = {}, navController: NavHostController){
     var gender by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
     var myweight by remember { mutableStateOf("") }
@@ -68,7 +66,7 @@ fun DataBCh(onBackClick:()-> Unit={}){
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ){
-                IconButton(onClick = onBackClick,
+                IconButton(onClick = {navController.popBackStack() },
                     modifier = Modifier.size(48.dp)) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -238,7 +236,7 @@ fun DataBCh(onBackClick:()-> Unit={}){
 
                 )
             {
-                Text(text="Далее",
+                Text(text="Сохранить",
                     fontSize =20.sp)
             }
         }
