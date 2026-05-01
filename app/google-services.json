@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "144923775165",
+    "project_id": "getset-b2362",
+    "storage_bucket": "getset-b2362.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144923775165:android:6d47f5e5c084ac54be27d4",
+        "android_client_info": {
+          "package_name": "com.example.getset"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI05j-xg-j4HCoWwb4i_9R3SQb0imECAQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
