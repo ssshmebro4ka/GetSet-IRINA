@@ -3,13 +3,13 @@ package com.example.getset.ui.theme
 import SignInScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.getset.GetSetScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.getset.ExercisesScreen
 import com.example.getset.MyPurpose
-import com.example.getset.ui.theme.ExercisesScreen
+
 
 sealed class Screen(val route: String) {
     object Registration : Screen("registration")
@@ -19,7 +19,6 @@ sealed class Screen(val route: String) {
     object DataB: Screen("data")
     object Home: Screen("home")
     object Profile: Screen("profile")
-    object MyReadyTrain: Screen("readytrain")
     object MyTrain: Screen("mytrain")
     object Exersize: Screen("exersize")
     object MyPorpouseTrain: Screen("myporposetrain")
@@ -27,8 +26,8 @@ sealed class Screen(val route: String) {
     object ChangePorpose: Screen("chageporpose")
     object ChangeData: Screen("changedata")
     object ChangeWarning: Screen("changewarning")
-    object FavoriteEx: Screen("favoriteexersize")
-    object FavoriteTrain: Screen("favoritetrain")
+
+
 
 }
 @Composable
@@ -62,14 +61,11 @@ fun AppNavigation() {
         composable(Screen.Profile.route){
             IScreen(navController=navController)
         }
-        composable(Screen.MyReadyTrain.route){
-            ReadyTrain(navController)
-        }
         composable(Screen.MyTrain.route){
             MyTrain(navController=navController)
         }
         composable(Screen.Exersize.route){
-            ExercisesScreen(navController = navController)
+            ExercisesScreen(navController=navController)
         }
         composable(Screen.MyPorpouseTrain.route){
             MyPorposeTrain(navController=navController)
@@ -85,12 +81,6 @@ fun AppNavigation() {
         }
         composable(Screen.ChangeWarning.route){
             ChangeWarning(navController = navController)
-        }
-        composable(Screen.FavoriteEx.route){
-            FavoriteEx(navController = navController)
-        }
-        composable(Screen.FavoriteTrain.route){
-            FavoriteTrain(navController = navController)
         }
     }
 }

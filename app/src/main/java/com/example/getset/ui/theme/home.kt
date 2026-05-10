@@ -111,39 +111,6 @@ fun HomeScreen(navController: NavHostController) {
                     .fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(15.dp))
-            Button(
-                onClick = {navController.navigate(Screen.MyReadyTrain.route)},
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFF117C00)
-                ),
-                shape = RoundedCornerShape(10.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-
-                ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "Готовые тренировки",
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.White,
-                        modifier = Modifier
-
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.vector),
-                        contentDescription = " ",
-                        modifier = Modifier.size(20.dp),
-                        tint = Color.White
-                    )
-                }
-
-            }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
                 onClick = {navController.navigate(Screen.MyTrain.route)},
