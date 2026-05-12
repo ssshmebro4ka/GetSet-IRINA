@@ -3,11 +3,13 @@ package com.example.getset.ui.theme
 import SignInScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.getset.GetSetScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.getset.ExercisesScreen
+import com.example.getset.MainViewModel
 import com.example.getset.MyPurpose
 
 
@@ -31,7 +33,7 @@ sealed class Screen(val route: String) {
 
 }
 @Composable
-fun AppNavigation() {
+fun AppNavigation(viewModel: MainViewModel) {
     val navController = rememberNavController()
     LaunchedEffect(navController) {
 
@@ -65,7 +67,8 @@ fun AppNavigation() {
             MyTrain(navController=navController)
         }
         composable(Screen.Exersize.route){
-            ExercisesScreen(navController=navController)
+            ExercisesScreen(navController = navController,
+                viewModel=viewModel)
         }
         composable(Screen.MyPorpouseTrain.route){
             MyPorposeTrain(navController=navController)

@@ -75,7 +75,7 @@ fun SignInScreen(navController: NavHostController) {
             OutlinedTextField(
                 value = login,
                 onValueChange = {login=it},
-                label={ Text("Логин", fontSize = 20.sp)},
+                label={ Text("Пароль", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
                     focusedContainerColor  = Color(0xFFFA1D05A),

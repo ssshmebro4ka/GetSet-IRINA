@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.getset.DatabaseHelper  // Импорт вашего DatabaseHelper
 
 @Composable
 fun MyTrain(navController: NavHostController) {

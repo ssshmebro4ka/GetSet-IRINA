@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -60,7 +60,7 @@ fun ChangeWarning(onBackClick: () -> Unit = {}, navController: NavHostController
             IconButton(onClick = {navController.popBackStack() },
                 modifier = Modifier.size(48.dp)) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    imageVector = Icons.Filled.ArrowBack,
                     contentDescription = " ",
                     tint = Color(0xFFF117C00),
                     modifier = Modifier.size(45.dp)

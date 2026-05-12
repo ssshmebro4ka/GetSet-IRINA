@@ -1,6 +1,5 @@
 package com.example.getset
 
-
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,32 +27,59 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.Modifier  // ✅ ПРАВИЛЬНЫЙ импорт
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.getset.ui.theme.AppNavigation
-import com.example.getset.ui.theme.DataB
+import com.example.getset.ui.theme.DatabaseHelper
 import com.example.getset.ui.theme.GetSetTheme
 import com.example.getset.ui.theme.Screen
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 
-lateinit var painter: Painter
 
+
+class MainViewModel(private val dbHelper: DatabaseHelper) : ViewModel() {
+    private val _dataList = MutableStateFlow<List<Map<String, Any>>>(emptyList())
+    val dataList: StateFlow<List<Map<String, Any>>> = _dataList
+
+    fun loadData() {
+        viewModelScope.launch {
+            _dataList.value = dbHelper.loadDataToList()
+        }
+    }
+}
 class MainActivity : ComponentActivity() {
+
+    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        dbHelper = DatabaseHelper(this)
+        viewModel = MainViewModel(dbHelper)
+        viewModel.loadData()
         enableEdgeToEdge()
         setContent {
             GetSetTheme {
-                AppNavigation()
-                //val navController = rememberNavController()
+                AppNavigation(viewModel = viewModel)
+                val navController = rememberNavController()
+
+                ExercisesScreen(navController = navController,
+                                viewModel = viewModel
+                )
                 //GetSetScreen(navController = navController)
                 //SignInScreen(navController = navController)
                 //MyPurpose(navController = navController)
