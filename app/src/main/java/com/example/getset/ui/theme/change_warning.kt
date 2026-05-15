@@ -21,11 +21,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,21 +31,53 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.R
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.ktx.auth
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
 fun ChangeWarning(onBackClick: () -> Unit = {}, navController: NavHostController){
-    var isOption1Selected  by remember { mutableStateOf(false) }
-    var isOption2Selected  by remember { mutableStateOf(false) }
-    var isOption3Selected  by remember { mutableStateOf(false) }
-    var isOption4Selected  by remember { mutableStateOf(false) }
-    var isOption5Selected  by remember { mutableStateOf(false) }
-    var isOption6Selected  by remember { mutableStateOf(false) }
-    val isOneChoose= (isOption1Selected ||isOption2Selected ||isOption3Selected||isOption4Selected||isOption5Selected)
-    Column (modifier = Modifier
-        .background(androidx.compose.ui.graphics.Color.White)
-        .fillMaxSize()
-        .padding(24.dp),
+    var selectedAreas by remember { mutableStateOf<Set<String>>(emptySet()) }
+    var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf("") }
+    var successMessage by remember { mutableStateOf("") }
+    var isDataLoaded by remember { mutableStateOf(false) }
+
+    val repository = remember { UserProfileRepository() }
+
+    val allAreas = listOf(
+        "Спина", "Руки", "Грудь", "Ноги", "Ягодицы", "Пресс"
+    )
+    LaunchedEffect(Unit) {
+        println("ChangeWarning: Загрузка областей внимания...")
+        isDataLoaded = false
+        repository.loadProfile { profile, error ->
+            if (profile != null && profile.attentionAreas.isNotEmpty()) {
+                println("ChangeWarning: Загружены области: ${profile.attentionAreas}")
+                selectedAreas = profile.attentionAreas.toSet()
+            } else {
+                println("ChangeWarning: Нет сохраненных областей")
+                selectedAreas = emptySet()
+            }
+            isDataLoaded = true
+        }
+    }
+
+    fun toggleArea(area: String) {
+        selectedAreas = if (selectedAreas.contains(area)) {
+            selectedAreas - area
+        } else {
+            selectedAreas + area
+        }
+    }
+
+    val isOneChoose = selectedAreas.isNotEmpty()
+
+    Column (
+        modifier = Modifier
+            .background(Color.White)
+            .fillMaxSize()
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ){
@@ -57,8 +85,10 @@ fun ChangeWarning(onBackClick: () -> Unit = {}, navController: NavHostController
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ){
-            IconButton(onClick = {navController.popBackStack() },
-                modifier = Modifier.size(48.dp)) {
+            IconButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.size(48.dp)
+            ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = " ",
@@ -68,76 +98,123 @@ fun ChangeWarning(onBackClick: () -> Unit = {}, navController: NavHostController
             }
         }
         Spacer(modifier = Modifier.height(30.dp))
-        Text(text="Выберите область внимания",
+        Text(
+            text = "Выберите области внимания (можно несколько)",
             fontSize = 30.sp,
-            fontWeight= FontWeight.Medium,
-            color= Color(0xFFF117C00),
+            fontWeight = FontWeight.Medium,
+            color = Color(0xFFF117C00),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        if (!isDataLoaded) {
+            Text(
+                text = "Загрузка данных...",
+                fontSize = 18.sp,
+                color = Color.Gray,
+                modifier = Modifier.padding(20.dp)
+            )
+        }
+
+        allAreas.forEach { area ->
+            SelectableButtonChangeWarning(
+                text = area,
+                isSelected = selectedAreas.contains(area),
+                onClick = { toggleArea(area) }
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+        }
+        Spacer(modifier = Modifier.height(48.dp))
+        if (selectedAreas.isNotEmpty()) {
+            Text(
+                text = "Выбрано: ${selectedAreas.size} областей",
+                fontSize = 16.sp,
+                color = Color(0xFFF117C00),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
+        if (errorMessage.isNotBlank()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
+        if (successMessage.isNotBlank()) {
+            Text(
+                text = successMessage,
+                color = Color(0xFFF117C00),
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
+        Button(
+            onClick = {
+                if (isOneChoose && !isLoading) {
+                    isLoading = true
+                    errorMessage = ""
+                    successMessage = ""
+
+                    println("ChangeWarning: СОХРАНЕНИЕ ОБЛАСТЕЙ: $selectedAreas")
+
+                    val currentUser = Firebase.auth.currentUser
+                    if (currentUser == null) {
+                        errorMessage = "Пользователь не залогинен"
+                        isLoading = false
+                        return@Button
+                    }
+
+                    repository.loadProfile { profile, loadError ->
+                        val existingProfile = profile ?: UserProfile()
+                        val updatedProfile = existingProfile.copy(attentionAreas = selectedAreas.toList())
+
+                        repository.saveProfile(updatedProfile) { success, saveError ->
+                            isLoading = false
+
+                            if (success) {
+                                println("ChangeWarning: Области внимания обновлены!")
+                                successMessage = "Области сохранены!"
+                                navController.popBackStack()
+                            } else {
+                                println("ChangeWarning: Ошибка: $saveError")
+                                errorMessage = saveError ?: "Ошибка сохранения"
+                            }
+                        }
+                    }
+                }
+            },
+            enabled = isOneChoose && !isLoading,
             modifier = Modifier
                 .fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonGhWar(text="Спина",
-            isSelected= isOption1Selected,
-            onClick={isOption1Selected=!isOption1Selected},
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonGhWar(text="Руки",
-            isSelected= isOption2Selected,
-            onClick={isOption2Selected=!isOption2Selected}
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonGhWar(text="Грудь",
-            isSelected= isOption3Selected,
-            onClick={isOption3Selected=!isOption3Selected}
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonGhWar(text="Ноги",
-            isSelected= isOption4Selected,
-            onClick={isOption4Selected=!isOption4Selected}
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonGhWar(text="Ягодицы",
-            isSelected= isOption5Selected,
-            onClick={isOption5Selected=!isOption5Selected}
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        SelectableButtonGhWar(text="Пресс",
-            isSelected= isOption6Selected,
-            onClick={isOption6Selected=!isOption6Selected}
-        )
-        Spacer(modifier = Modifier.height(48.dp))
-        Button(onClick = {},
-            enabled = isOneChoose,
-            modifier = Modifier.fillMaxWidth(1f)
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor =  Color(0xFFF117C00),
-                disabledContentColor = Color(0xFFF117C00),
+                containerColor = Color(0xFFF117C00),
+                disabledContainerColor = Color(0xFFFB7D092),
                 contentColor = Color.White,
-                disabledContainerColor = Color(0xFFFB7D092)
+                disabledContentColor = Color(0xFFF117C00)
             )
         ) {
-            Text(
-                text = "Сохранить",
-                fontSize = 20.sp)
+            Text(text = if (isLoading) "Сохранение..." else "Сохранить", fontSize = 20.sp)
         }
     }
 }
 
 @Composable
-fun SelectableButtonGhWar(text: String,
-                     isSelected: Boolean,
-                     onClick: () -> Unit,
-                     modifier: Modifier= Modifier
+fun SelectableButtonChangeWarning(
+    text: String,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Button(onClick=onClick,
-        modifier = Modifier.fillMaxWidth(1f)
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
             .height(70.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = if(isSelected) Color(0xFFF117C00) else Color(0xFFFB7D092),
-
-            ),
+            containerColor = if (isSelected) Color(0xFFF117C00) else Color(0xFFFB7D092),
+        ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 0.dp,
             pressedElevation = 4.dp
@@ -157,16 +234,15 @@ fun SelectableButtonGhWar(text: String,
                         contentDescription = " ",
                         modifier = Modifier.size(20.dp),
                         tint = Color.White
-
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                 }
-                Text(text,
-                    fontSize=20.sp,
-                    color=if(isSelected) Color.White else Color(0xFFF117C00)
+                Text(
+                    text,
+                    fontSize = 20.sp,
+                    color = if (isSelected) Color.White else Color(0xFFF117C00)
                 )
             }
         }
-
     }
 }
