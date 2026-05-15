@@ -27,7 +27,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier  // ✅ ПРАВИЛЬНЫЙ импорт
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -46,6 +46,9 @@ import com.example.getset.ui.theme.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 
@@ -77,9 +80,9 @@ class MainActivity : ComponentActivity() {
                 AppNavigation(viewModel = viewModel)
                 val navController = rememberNavController()
 
-                ExercisesScreen(navController = navController,
-                                viewModel = viewModel
-                )
+                //ExercisesScreen(navController = navController,
+                 //               viewModel = viewModel
+                //)
                 //GetSetScreen(navController = navController)
                 //SignInScreen(navController = navController)
                 //MyPurpose(navController = navController)
@@ -102,11 +105,13 @@ fun GetSetScreen(navController: NavHostController) {
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isNavigating by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf("") }
     val isFormValid by remember {
         derivedStateOf {
             login.isNotBlank() && password.isNotBlank()
         }
     }
+    val auth = Firebase.auth
     val lifecycleOwner = LocalLifecycleOwner.current
     Box(
         modifier = Modifier.fillMaxSize()
@@ -144,7 +149,7 @@ fun GetSetScreen(navController: NavHostController) {
             OutlinedTextField(
                 value = login,
                 onValueChange = {login=it},
-                label={ Text("Логин", fontSize = 20.sp)},
+                label={ Text("Почта", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
                     focusedContainerColor  = Color(0xFFFA1D05A),
@@ -175,10 +180,16 @@ fun GetSetScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(40.dp))
             Button(onClick = {
                 if(isFormValid){
-                    println("Регистрация:$login/$password")
-                    navController.navigate(Screen.MyPurpose.route){
-                        popUpTo(Screen.Registration.route) { inclusive = true }
-                    }
+                    auth.createUserWithEmailAndPassword(login, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                navController.navigate(Screen.MyPurpose.route) {
+                                    popUpTo(Screen.Registration.route) { inclusive = true }
+                                }
+                            } else {
+                                errorMessage = task.exception?.localizedMessage ?: "Ошибка регистрации"
+                            }
+                        }
                 }
             },
                 enabled = isFormValid,
@@ -196,6 +207,14 @@ fun GetSetScreen(navController: NavHostController) {
             {
                 Text(text="Зарегистрироваться",
                     fontSize =20.sp)
+            }
+            if (errorMessage.isNotBlank()) {
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
             }
             Spacer(modifier = Modifier.height(40.dp))
             Text(text="Уже есть аккаунт ?",

@@ -29,17 +29,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.ui.theme.Screen
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
 fun SignInScreen(navController: NavHostController) {
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
     val isFormValid by remember {
         derivedStateOf {
             login.isNotBlank() && password.isNotBlank()
         }
     }
+    val auth = Firebase.auth
     Box(
         modifier = Modifier.fillMaxSize()
     ){
@@ -74,8 +79,10 @@ fun SignInScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(48.dp))
             OutlinedTextField(
                 value = login,
-                onValueChange = {login=it},
-                label={ Text("Пароль", fontSize = 20.sp)},
+                onValueChange = {login=it
+                    errorMessage = ""
+                },
+                label={ Text("Почта", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
                     focusedContainerColor  = Color(0xFFFA1D05A),
@@ -90,7 +97,8 @@ fun SignInScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(40.dp))
             OutlinedTextField(
                 value = password,
-                onValueChange = {password=it},
+                onValueChange = {password=it
+                    errorMessage = ""},
                 label={Text("Пароль", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
@@ -105,11 +113,18 @@ fun SignInScreen(navController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(40.dp))
             Button(onClick = {
-                if(isFormValid){
-                    println("Регистрация:$login/$password")
-                    navController.navigate(Screen.Home.route) {
-                        popUpTo(0) { inclusive = true }
-                    }
+                if (isFormValid) {
+                    auth.signInWithEmailAndPassword(login, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                println("Вход выполнен: ${auth.currentUser?.email}")
+                                navController.navigate(Screen.Home.route) {
+                                    popUpTo(0) { inclusive = true }
+                                }
+                            } else {
+                                errorMessage = task.exception?.localizedMessage ?: "Ошибка входа"
+                            }
+                        }
                 }
             },
                 enabled = isFormValid,
@@ -127,6 +142,15 @@ fun SignInScreen(navController: NavHostController) {
             {
                 Text(text="Войти",
                     fontSize =20.sp)
+            }
+            if (errorMessage.isNotBlank()) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }
