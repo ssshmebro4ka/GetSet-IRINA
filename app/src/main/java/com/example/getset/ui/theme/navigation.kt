@@ -12,6 +12,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.getset.ExercisesScreen
 import com.example.getset.MainViewModel
+import com.example.getset.MyPorposeTrain
 import com.example.getset.MyPurpose
 
 sealed class Screen(val route: String) {
@@ -41,7 +42,7 @@ fun AppNavigation(viewModel: MainViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Registration.route
+        startDestination = Screen.Home.route
     ) {
         composable(Screen.Registration.route) {
             GetSetScreen(navController = navController)

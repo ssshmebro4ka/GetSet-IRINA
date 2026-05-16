@@ -40,6 +40,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.getset.ui.theme.AppNavigation
+import com.example.getset.ui.theme.DataBCh
 import com.example.getset.ui.theme.DatabaseHelper
 import com.example.getset.ui.theme.GetSetTheme
 import com.example.getset.ui.theme.Screen
@@ -70,16 +71,15 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         dbHelper = DatabaseHelper(this)
         viewModel = MainViewModel(dbHelper)
         viewModel.loadData()
         enableEdgeToEdge()
+
         setContent {
             GetSetTheme {
                 AppNavigation(viewModel = viewModel)
                 val navController = rememberNavController()
-
                 //ExercisesScreen(navController = navController,
                  //               viewModel = viewModel
                 //)

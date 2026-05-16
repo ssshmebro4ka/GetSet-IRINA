@@ -1,5 +1,6 @@
 package com.example.getset.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.R
 
+@SuppressLint("InvalidColorHexValue")
 @Composable
 fun IScreen(navController: NavHostController) {
     var selectedItem by remember { mutableStateOf(1) }
@@ -47,7 +50,7 @@ fun IScreen(navController: NavHostController) {
         painterResource(id = R.drawable.i)
     )
     Scaffold(
-        bottomBar = {NavigationBar (containerColor = Color(0xFFF117C00)){
+        bottomBar = {NavigationBar (containerColor = Color(0xFFF117C00)){ // 0xFFF117C00
             items.forEachIndexed { index, item -> NavigationBarItem(
                 icon = {
                     Icon(
@@ -74,7 +77,8 @@ fun IScreen(navController: NavHostController) {
                     unselectedIconColor = Color.White,
                     selectedTextColor = Color(0xFFF117C00),
                     unselectedTextColor = Color.White,
-                    indicatorColor = Color.Transparent)
+                    indicatorColor =  Color(0xFFF117C00)
+                )
             )
             }
         }
@@ -97,15 +101,6 @@ fun IScreen(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
 
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "Login",
-                fontSize = 35.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color(0xFFF117C00),
-                modifier = Modifier
-                    .fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(30.dp))
             Button(

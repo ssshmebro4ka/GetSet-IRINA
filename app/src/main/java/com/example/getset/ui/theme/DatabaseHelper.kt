@@ -23,7 +23,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
     fun checkDatabase(): String {
         val db = readableDatabase
-        val cursor = db.rawQuery("SELECT exercises FROM sqlite_master WHERE type='table'", null)
+        val cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null)
         val tables = mutableListOf<String>()
         while (cursor.moveToNext()) {
             tables.add(cursor.getString(0))
