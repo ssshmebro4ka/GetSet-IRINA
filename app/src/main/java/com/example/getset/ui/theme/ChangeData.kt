@@ -1,5 +1,6 @@
 package com.example.getset.ui.theme
 
+import android.R.attr.fontWeight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -85,7 +86,7 @@ fun DataBCh(onBackClick: () -> Unit = {}, navController: NavHostController){
             modifier = Modifier
                 .background(Color.White)
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ){
@@ -106,7 +107,7 @@ fun DataBCh(onBackClick: () -> Unit = {}, navController: NavHostController){
 
             Text(
                 text = "Изменить мои",
-                fontSize = 50.sp,
+                fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
@@ -115,12 +116,12 @@ fun DataBCh(onBackClick: () -> Unit = {}, navController: NavHostController){
             )
             Text(
                 text = "данные",
-                fontSize = 50.sp,
+                fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp),
+
             )
 
             if (!isDataLoaded) {
@@ -134,12 +135,12 @@ fun DataBCh(onBackClick: () -> Unit = {}, navController: NavHostController){
 
             Text(
                 text = "Пол",
-                fontSize = 45.sp,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 10.dp),
             )
 
             ExposedDropdownMenuBox(
@@ -183,12 +184,12 @@ fun DataBCh(onBackClick: () -> Unit = {}, navController: NavHostController){
 
             Text(
                 text = "Рост",
-                fontSize = 45.sp,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 10.dp),
             )
             OutlinedTextField(
                 value = height,
@@ -208,12 +209,12 @@ fun DataBCh(onBackClick: () -> Unit = {}, navController: NavHostController){
 
             Text(
                 text = "Текущий вес",
-                fontSize = 45.sp,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 10.dp),
             )
             OutlinedTextField(
                 value = myweight,
@@ -233,12 +234,12 @@ fun DataBCh(onBackClick: () -> Unit = {}, navController: NavHostController){
 
             Text(
                 text = "Желаемый вес",
-                fontSize = 45.sp,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 10.dp),
             )
             OutlinedTextField(
                 value = wantweight,

@@ -209,8 +209,8 @@ fun DataB(navController: NavHostController) {
                         isLoading = true
                         errorMessage = ""
 
-                        println("🔵 DataB: СОХРАНЕНИЕ ДАННЫХ")
-                        println("🔵 DataB: пол=$gender, рост=$height, вес=$myweight, цель=$wantweight")
+                        println("DataB: СОХРАНЕНИЕ ДАННЫХ")
+                        println("DataB: пол=$gender, рост=$height, вес=$myweight, цель=$wantweight")
 
                         val currentUser = Firebase.auth.currentUser
                         if (currentUser == null) {
@@ -233,12 +233,12 @@ fun DataB(navController: NavHostController) {
                                 isLoading = false
 
                                 if (success) {
-                                    println("✅ DataB: Данные сохранены!")
+                                    println("DataB: Данные сохранены!")
                                     navController.navigate(Screen.Home.route) {
                                         popUpTo(0) { inclusive = true }
                                     }
                                 } else {
-                                    println("🔴 DataB: Ошибка: $saveError")
+                                    println("DataB: Ошибка: $saveError")
                                     errorMessage = saveError ?: "Ошибка сохранения"
                                 }
                             }

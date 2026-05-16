@@ -1,5 +1,6 @@
 package com.example.getset.ui.theme
 
+import android.R.attr.fontWeight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -78,7 +79,8 @@ fun HomeScreen(navController: NavHostController) {
                     unselectedIconColor = Color.White,
                     selectedTextColor = Color(0xFFF117C00),
                     unselectedTextColor = Color.White,
-                    indicatorColor = Color.Transparent)
+                    indicatorColor = Color(0xFFF117C00)
+                )
                 )
             }
         }
@@ -103,8 +105,8 @@ fun HomeScreen(navController: NavHostController) {
 
             )
             Text(
-                text = "Здравствуйте, Login",
-                fontSize = 35.sp,
+                text = "Здравствуйте!",
+                fontSize = 50.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color(0xFFF117C00),
                 modifier = Modifier

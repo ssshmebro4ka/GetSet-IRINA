@@ -113,7 +113,7 @@ fun Warning(navController: NavHostController) {
             Spacer(modifier = Modifier.height(20.dp))
         }
 
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         if (selectedAreas.isNotEmpty()) {
             Text(

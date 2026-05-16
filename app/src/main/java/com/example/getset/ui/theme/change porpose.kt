@@ -52,17 +52,15 @@ fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostControll
         "Стать стройным и рельефным",
         "Набрать мышечную массу"
     )
-
-    // ЗАГРУЖАЕМ ДАННЫЕ ПРИ ОТКРЫТИИ ЭКРАНА
     LaunchedEffect(Unit) {
-        println("🔵 MyChangePurpose: Загрузка целей...")
+        println("MyChangePurpose: Загрузка целей...")
         isDataLoaded = false
         repository.loadProfile { profile, error ->
             if (profile != null && profile.purposes.isNotEmpty()) {
-                println("🔵 MyChangePurpose: Загружены цели: ${profile.purposes}")
+                println("MyChangePurpose: Загружены цели: ${profile.purposes}")
                 selectedPurposes = profile.purposes.toSet()
             } else {
-                println("🟡 MyChangePurpose: Нет сохраненных целей")
+                println("MyChangePurpose: Нет сохраненных целей")
                 selectedPurposes = emptySet()
             }
             isDataLoaded = true
@@ -107,7 +105,7 @@ fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostControll
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = "Выберите цели (можно несколько)",
+            text = "Выберите цели",
             fontSize = 30.sp,
             fontWeight = FontWeight.Medium,
             color = Color(0xFFF117C00),
@@ -170,7 +168,7 @@ fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostControll
                     errorMessage = ""
                     successMessage = ""
 
-                    println("🔵 MyChangePurpose: СОХРАНЕНИЕ ЦЕЛЕЙ: $selectedPurposes")
+                    println("MyChangePurpose: СОХРАНЕНИЕ ЦЕЛЕЙ: $selectedPurposes")
 
                     val currentUser = Firebase.auth.currentUser
                     if (currentUser == null) {
@@ -187,11 +185,11 @@ fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostControll
                             isLoading = false
 
                             if (success) {
-                                println("✅ MyChangePurpose: Цели обновлены!")
-                                successMessage = "✅ Цели сохранены!"
+                                println("MyChangePurpose: Цели обновлены!")
+                                successMessage = "Цели сохранены!"
                                 navController.popBackStack()
                             } else {
-                                println("🔴 MyChangePurpose: Ошибка: $saveError")
+                                println("MyChangePurpose: Ошибка: $saveError")
                                 errorMessage = saveError ?: "Ошибка сохранения"
                             }
                         }
