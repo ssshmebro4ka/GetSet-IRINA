@@ -220,7 +220,7 @@ fun WorkoutCard(
             .clickable { onClick() },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFF5F5F5)
+            containerColor = Color(0xFFF117C00)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -238,19 +238,19 @@ fun WorkoutCard(
                     text = workout.title,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFFF117C00)
+                    color = Color.White
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = workout.date,
                     fontSize = 14.sp,
-                    color = Color.Gray
+                    color = Color.White
                 )
                 if (workout.exercises.isNotEmpty()) {
                     Text(
                         text = "${workout.exercises.size} упражнений",
                         fontSize = 12.sp,
-                        color = Color(0xFFF117C00)
+                        color = Color.White
                     )
                 }
             }
@@ -261,7 +261,7 @@ fun WorkoutCard(
                 Icon(
                     imageVector = Icons.Filled.Delete,
                     contentDescription = "Удалить",
-                    tint = Color(0xFFF117C00)
+                    tint = Color.White
                 )
             }
         }

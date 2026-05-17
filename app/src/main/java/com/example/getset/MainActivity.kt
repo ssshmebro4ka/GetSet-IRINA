@@ -29,38 +29,48 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.getset.ui.theme.AppNavigation
-import com.example.getset.ui.theme.DataBCh
 import com.example.getset.ui.theme.DatabaseHelper
 import com.example.getset.ui.theme.GetSetTheme
 import com.example.getset.ui.theme.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.withContext
 
 
 
 
 class MainViewModel(private val dbHelper: DatabaseHelper) : ViewModel() {
+
     private val _dataList = MutableStateFlow<List<Map<String, Any>>>(emptyList())
     val dataList: StateFlow<List<Map<String, Any>>> = _dataList
 
     fun loadData() {
         viewModelScope.launch {
-            _dataList.value = dbHelper.loadDataToList()
+            try {
+                val data = withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    dbHelper.loadDataToList()
+                }
+                _dataList.update { data }
+                println("Загружено ${data.size} упражнений")
+            } catch (e: Exception) {
+                println("Ошибка: ${e.message}")
+                _dataList.update { emptyList() }
+            }
         }
     }
 }
@@ -74,6 +84,13 @@ class MainActivity : ComponentActivity() {
         dbHelper = DatabaseHelper(this)
         viewModel = MainViewModel(dbHelper)
         viewModel.loadData()
+        lifecycleScope.launch {
+            try {
+                viewModel.loadData()
+            } catch (e: Exception) {
+                println("Ошибка загрузки данных: ${e.message}")
+            }
+        }
         enableEdgeToEdge()
 
         setContent {

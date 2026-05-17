@@ -12,8 +12,8 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.getset.ExercisesScreen
 import com.example.getset.MainViewModel
-import com.example.getset.MyPorposeTrain
 import com.example.getset.MyPurpose
+import com.example.getset.ui.theme.MyPorposeTrain
 
 sealed class Screen(val route: String) {
     object Workouts : Screen("workouts")
@@ -42,7 +42,7 @@ fun AppNavigation(viewModel: MainViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Registration.route
     ) {
         composable(Screen.Registration.route) {
             GetSetScreen(navController = navController)
@@ -84,7 +84,8 @@ fun AppNavigation(viewModel: MainViewModel) {
         }
 
         composable(Screen.MyPorpouseTrain.route) {
-            MyPorposeTrain(navController = navController)
+            MyPorposeTrain(navController = navController,
+                viewModel = viewModel)
         }
 
         composable(Screen.Secundomer.route) {
