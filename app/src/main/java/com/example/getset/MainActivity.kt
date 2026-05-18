@@ -19,11 +19,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Инициализация
         dbHelper = DatabaseHelper(this)
         viewModel = MainViewModel(dbHelper)
 
-        // Загрузка данных один раз
         lifecycleScope.launch {
             try {
                 viewModel.loadData()

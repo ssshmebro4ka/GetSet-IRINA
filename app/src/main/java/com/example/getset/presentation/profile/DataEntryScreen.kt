@@ -41,7 +41,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DataEntryScreen( // Переименовали функцию
+fun DataEntryScreen(
     navController: NavHostController,
     viewModel: ProfileViewModel = viewModel()
 ) {
@@ -58,7 +58,7 @@ fun DataEntryScreen( // Переименовали функцию
                     }
                 }
 
-                is ProfileEffect.ShowToast -> { /* Handle toast */
+                is ProfileEffect.ShowToast -> {
                 }
             }
         }
@@ -145,7 +145,7 @@ fun DataEntryScreen( // Переименовали функцию
                     .fillMaxWidth()
                     .padding(top = 15.dp),
             )
-            ProfileTextField( // Используем компонент!
+            ProfileTextField(
                 value = state.height,
                 onValueChange = { viewModel.handleIntent(ProfileIntent.UpdateHeight(it)) },
                 label = "Введите рост"
@@ -160,7 +160,7 @@ fun DataEntryScreen( // Переименовали функцию
                     .fillMaxWidth()
                     .padding(top = 15.dp),
             )
-            ProfileTextField( // Используем компонент!
+            ProfileTextField(
                 value = state.myWeight,
                 onValueChange = { viewModel.handleIntent(ProfileIntent.UpdateMyWeight(it)) },
                 label = "Введите текущий вес"
@@ -175,7 +175,7 @@ fun DataEntryScreen( // Переименовали функцию
                     .fillMaxWidth()
                     .padding(top = 15.dp),
             )
-            ProfileTextField( // Используем компонент!
+            ProfileTextField(
                 value = state.wantWeight,
                 onValueChange = { viewModel.handleIntent(ProfileIntent.UpdateWantWeight(it)) },
                 label = "Введите желаемый вес"

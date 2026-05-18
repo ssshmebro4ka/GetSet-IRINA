@@ -30,7 +30,7 @@ import com.example.getset.presentation.components.ProfileTextField
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun SignUpScreen( // ЭТО РЕГИСТРАЦИЯ
+fun SignUpScreen(
     navController: NavHostController,
     viewModel: AuthViewModel = viewModel()
 ) {
@@ -51,7 +51,7 @@ fun SignUpScreen( // ЭТО РЕГИСТРАЦИЯ
                     }
                 }
 
-                is AuthEffect.ShowError -> { /* Handle error */
+                is AuthEffect.ShowError -> {
                 }
             }
         }

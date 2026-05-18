@@ -32,7 +32,7 @@ import com.example.getset.R
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun ChangePurposeScreen( // Переименовали функцию для консистентности
+fun ChangePurposeScreen(
     navController: NavHostController,
     viewModel: PurposeViewModel = viewModel()
 ) {
@@ -42,10 +42,10 @@ fun ChangePurposeScreen( // Переименовали функцию для к�
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is PurposeEffect.NavigateBack -> navController.popBackStack()
-                is PurposeEffect.NavigateToWarning -> { /* Not used here */
+                is PurposeEffect.NavigateToWarning -> {
                 }
 
-                is PurposeEffect.ShowError -> { /* Handle error */
+                is PurposeEffect.ShowError -> {
                 }
             }
         }
@@ -69,7 +69,7 @@ fun ChangePurposeScreen( // Переименовали функцию для к�
             ) {
                 Icon(
                     painter = painterResource(R.drawable.arrow_left),
-                    contentDescription = "Назад", // Лучше добавлять описание для доступности
+                    contentDescription = "Назад",
                     tint = Color(0xFF117C00),
                     modifier = Modifier.size(45.dp)
                 )
@@ -98,7 +98,6 @@ fun ChangePurposeScreen( // Переименовали функцию для к�
         }
 
         viewModel.allPurposes.forEach { purpose ->
-            // Используем общую кнопку из PurposeScreen.kt!
             SelectableButton(
                 text = purpose,
                 isSelected = state.selectedPurposes.contains(purpose),

@@ -6,12 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.getset.presentation.workout.ExercisesScreen
-import com.example.getset.GetSetScreen
-
-import com.example.getset.MainViewModel
 import com.example.getset.presentation.auth.SignInScreen
+import com.example.getset.presentation.auth.SignUpScreen
 import com.example.getset.presentation.home.HomeScreen
+import com.example.getset.presentation.main.MainViewModel
 import com.example.getset.presentation.profile.DataBCh
 import com.example.getset.presentation.profile.DataEntryScreen
 import com.example.getset.presentation.profile.IScreen
@@ -20,10 +18,10 @@ import com.example.getset.presentation.purpose.PurposeScreen
 import com.example.getset.presentation.timer.Secundino
 import com.example.getset.presentation.warning.ChangeWarning
 import com.example.getset.presentation.warning.WarningScreen
+import com.example.getset.presentation.workout.ExercisesScreen
 import com.example.getset.presentation.workout.MyPorposeTrain
 import com.example.getset.presentation.workout.MyTrain
 import com.example.getset.presentation.workout.WorkoutDetailScreen
-
 
 sealed class Screen(val route: String) {
     object WorkoutDetail : Screen("workout_detail/{workoutId}") {
@@ -34,14 +32,14 @@ sealed class Screen(val route: String) {
     object SignIn : Screen("signin")
     object MyPurpose : Screen("my_purpose")
     object Warning : Screen("warning")
-    object DataEntry : Screen("data_entry") // Исправили название маршрута
+    object DataEntry : Screen("data_entry")
     object Home : Screen("home")
     object Profile : Screen("profile")
     object MyTrain : Screen("my_train")
-    object Exercise : Screen("exercise") // Исправили орфографию
-    object MyPurposeTrain : Screen("my_purpose_train") // Исправили орфографию
-    object Stopwatch : Screen("stopwatch") // Переименовали секундомер
-    object ChangePurpose : Screen("change_purpose") // Исправили орфографию
+    object Exercise : Screen("exercise")
+    object MyPurposeTrain : Screen("my_purpose_train")
+    object Stopwatch : Screen("stopwatch")
+    object ChangePurpose : Screen("change_purpose")
     object ChangeData : Screen("change_data")
     object ChangeWarning : Screen("change_warning")
 }
@@ -55,7 +53,7 @@ fun AppNavigation(viewModel: MainViewModel) {
         startDestination = Screen.Registration.route,
     ) {
         composable(Screen.Registration.route) {
-            GetSetScreen(navController = navController)
+            SignUpScreen(navController = navController)
         }
 
         composable(Screen.SignIn.route) {
@@ -71,7 +69,7 @@ fun AppNavigation(viewModel: MainViewModel) {
         }
 
         composable(Screen.DataEntry.route) {
-            DataEntryScreen(navController = navController) // Было DataScreen/DataB
+            DataEntryScreen(navController = navController)
         }
 
         composable(Screen.Home.route) {
@@ -79,11 +77,11 @@ fun AppNavigation(viewModel: MainViewModel) {
         }
 
         composable(Screen.Profile.route) {
-            IScreen(navController = navController) // Было IScreen
+            IScreen(navController = navController)
         }
 
         composable(Screen.MyTrain.route) {
-            MyTrain(navController = navController) // Было MyTrain
+            MyTrain(navController = navController)
         }
 
         composable(Screen.Exercise.route) {
@@ -94,14 +92,14 @@ fun AppNavigation(viewModel: MainViewModel) {
         }
 
         composable(Screen.MyPurposeTrain.route) {
-            MyPorposeTrain( // Было MyPorposeTrain
+            MyPorposeTrain(
                 navController = navController,
                 viewModel = viewModel
             )
         }
 
         composable(Screen.Stopwatch.route) {
-            Secundino(navController = navController) // Было Secundino
+            Secundino(navController = navController)
         }
 
         composable(Screen.ChangePurpose.route) {
@@ -109,11 +107,11 @@ fun AppNavigation(viewModel: MainViewModel) {
         }
 
         composable(Screen.ChangeData.route) {
-            DataBCh(navController = navController) // Убедись, что функция называется так (было DataBCh)
+            DataBCh(navController = navController)
         }
 
         composable(Screen.ChangeWarning.route) {
-            ChangeWarning(navController = navController) // Было ChangeWarning
+            ChangeWarning(navController = navController)
         }
 
         composable(

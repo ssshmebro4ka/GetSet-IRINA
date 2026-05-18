@@ -38,7 +38,7 @@ import com.example.getset.navigation.Screen
 @Composable
 fun HomeScreen(navController: NavHostController) {
     var selectedItem by remember { mutableIntStateOf(0) }
-    val items = listOf("Главная", "Я")//navigation bar
+    val items = listOf("Главная", "Я")
     val selectedIcons = listOf(
         painterResource(id = R.drawable.home),
         painterResource(id = R.drawable.i)
