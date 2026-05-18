@@ -12,6 +12,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.getset.ExercisesScreen
 import com.example.getset.MainViewModel
+
 import com.example.getset.MyPurpose
 import com.example.getset.ui.theme.MyPorposeTrain
 
