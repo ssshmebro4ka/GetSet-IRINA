@@ -1,4 +1,4 @@
-package com.example.getset.ui.theme
+package com.example.getset.theme
 
 import android.annotation.SuppressLint
 import androidx.compose.ui.graphics.Color

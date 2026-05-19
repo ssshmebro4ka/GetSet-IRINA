@@ -33,9 +33,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.getset.ui.theme.Screen
-import com.example.getset.ui.theme.UserProfile
-import com.example.getset.ui.theme.UserProfileRepository
+import com.example.getset.model.UserProfile
+import com.example.getset.theme.Screen
+import com.example.getset.theme.UserProfileRepository
+
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.auth.ktx.auth
 

@@ -1,4 +1,4 @@
-package com.example.getset.ui.theme
+package com.example.getset.theme
 
 import androidx.compose.material3.Icon
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.example.getset.ui.theme
+package com.example.getset.theme
 
 import android.R.attr.fontWeight
 import androidx.compose.foundation.background
@@ -50,10 +50,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.R
+import com.example.getset.model.UserProfile
+import com.example.getset.model.Workout
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import kotlin.collections.filter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

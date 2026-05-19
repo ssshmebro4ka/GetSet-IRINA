@@ -1,11 +1,11 @@
-package com.example.getset.ui.theme
+package com.example.getset.theme
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun SortEx(){
+fun SortTrain(){
     Text(
-        text = "сортировка упражнений",
+        text = "сортировка тренировок",
     )
 }

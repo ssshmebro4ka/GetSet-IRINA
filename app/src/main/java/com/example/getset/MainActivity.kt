@@ -39,10 +39,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.getset.ui.theme.AppNavigation
-import com.example.getset.ui.theme.Database_Helper
-import com.example.getset.ui.theme.GetSetTheme
-import com.example.getset.ui.theme.Screen
+import com.example.getset.theme.AppNavigation
+import com.example.getset.theme.Database_Helper
+import com.example.getset.theme.GetSetTheme
+import com.example.getset.theme.Screen
+
+import com.example.getset.viewmodel.MainViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -52,27 +54,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 
-
-
-
-class MainViewModel(private val dbHelper: Database_Helper) : ViewModel() {
-
-    private val _dataList = MutableStateFlow<List<Map<String, Any>>>(emptyList())
-    val dataList: StateFlow<List<Map<String, Any>>> = _dataList
-
-    fun loadData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val data = dbHelper.loadDataToList()
-                _dataList.update { data }
-                println("Загружено ${data.size} упражнений")
-            } catch (e: Exception) {
-                println("Ошибка: ${e.message}")
-                _dataList.update { emptyList() }
-            }
-        }
-    }
-}
 class MainActivity : ComponentActivity() {
 
     private lateinit var dbHelper: Database_Helper
@@ -97,7 +78,7 @@ class MainActivity : ComponentActivity() {
                 AppNavigation(viewModel = viewModel)
                 val navController = rememberNavController()
                 //ExercisesScreen(navController = navController,
-                 //               viewModel = viewModel
+                //               viewModel = viewModel
                 //)
                 //GetSetScreen(navController = navController)
                 //SignInScreen(navController = navController)
@@ -131,20 +112,21 @@ fun GetSetScreen(navController: NavHostController) {
     val lifecycleOwner = LocalLifecycleOwner.current
     Box(
         modifier = Modifier.fillMaxSize()
-    ){
-        Column (modifier = Modifier
-            .background(Color.White)
-            .fillMaxSize()
-            .padding(24.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color.White)
+                .fillMaxSize()
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
-            ){
+        ) {
 
             Text(
                 text = "GetSet",
                 fontSize = 64.sp,
-                fontWeight= FontWeight.Bold,
-                color= Color(0xFFF117C00),
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 50.dp),
@@ -154,8 +136,8 @@ fun GetSetScreen(navController: NavHostController) {
             Text(
                 text = "Регистрация",
                 fontSize = 32.sp,
-                fontWeight= FontWeight.Bold,
-                color= Color(0xFFF117C00),
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 50.dp),
@@ -164,65 +146,69 @@ fun GetSetScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(48.dp))
             OutlinedTextField(
                 value = login,
-                onValueChange = {login=it},
-                label={ Text("Почта", fontSize = 20.sp)},
+                onValueChange = { login = it },
+                label = { Text("Почта", fontSize = 20.sp) },
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
-                    focusedContainerColor  = Color(0xFFFA1D05A),
+                    focusedContainerColor = Color(0xFFFA1D05A),
                     focusedLabelColor = Color(0xFFF117C00),
                     unfocusedLabelColor = Color(0xFFF117C00),
                     focusedBorderColor = Color(0xFFF117C00),
                     unfocusedBorderColor = Color(0xFFF117C00)
                 ),
-                shape= RoundedCornerShape(15.dp),
+                shape = RoundedCornerShape(15.dp),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(40.dp))
             OutlinedTextField(
                 value = password,
-                onValueChange = {password=it},
-                label={Text("Пароль", fontSize = 20.sp)},
+                onValueChange = { password = it },
+                label = { Text("Пароль", fontSize = 20.sp) },
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
-                    focusedContainerColor  = Color(0xFFFA1D05A),
+                    focusedContainerColor = Color(0xFFFA1D05A),
                     focusedLabelColor = Color(0xFFF117C00),
                     unfocusedLabelColor = Color(0xFFF117C00),
                     focusedBorderColor = Color(0xFFF117C00),
                     unfocusedBorderColor = Color(0xFFF117C00)
                 ),
-                shape= RoundedCornerShape(15.dp),
+                shape = RoundedCornerShape(15.dp),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(40.dp))
-            Button(onClick = {
-                if(isFormValid){
-                    auth.createUserWithEmailAndPassword(login, password)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                navController.navigate(Screen.MyPurpose.route) {
-                                    popUpTo(Screen.Registration.route) { inclusive = true }
+            Button(
+                onClick = {
+                    if (isFormValid) {
+                        auth.createUserWithEmailAndPassword(login, password)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    navController.navigate(Screen.MyPurpose.route) {
+                                        popUpTo(Screen.Registration.route) { inclusive = true }
+                                    }
+                                } else {
+                                    errorMessage =
+                                        task.exception?.localizedMessage ?: "Ошибка регистрации"
                                 }
-                            } else {
-                                errorMessage = task.exception?.localizedMessage ?: "Ошибка регистрации"
                             }
-                        }
-                }
-            },
+                    }
+                },
                 enabled = isFormValid,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors= ButtonDefaults.buttonColors(
-                    containerColor = if (isFormValid) Color(0xFFF117C00) else Color (0xFFFB7D092),
-                    contentColor = if(isFormValid) Color(0xFFFFFFEFE) else Color(color = 0xFFF117C00) ,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (isFormValid) Color(0xFFF117C00) else Color(0xFFFB7D092),
+                    contentColor = if (isFormValid) Color(0xFFFFFFEFE) else Color(color = 0xFFF117C00),
                     disabledContainerColor = Color(0xFFFB7D092),
                     disabledContentColor = Color(0xFFF117C00)
                 ),
 
-            )
+                )
             {
-                Text(text="Зарегистрироваться",
-                    fontSize =20.sp)
+                Text(
+                    text = "Зарегистрироваться",
+                    fontSize = 20.sp
+                )
             }
             if (errorMessage.isNotBlank()) {
                 Text(
@@ -233,24 +219,29 @@ fun GetSetScreen(navController: NavHostController) {
                 )
             }
             Spacer(modifier = Modifier.height(40.dp))
-            Text(text="Уже есть аккаунт ?",
-                fontSize =20.sp,
-                color=Color(0xFFF117C00)
+            Text(
+                text = "Уже есть аккаунт ?",
+                fontSize = 20.sp,
+                color = Color(0xFFF117C00)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            Button(onClick = {navController.navigate(Screen.SignIn.route) {
-            }},
+            Button(
+                onClick = {
+                    navController.navigate(Screen.SignIn.route) {
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp), //эщкере
-                colors= ButtonDefaults.buttonColors(
+                colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00),
                     contentColor = Color(0xFFFFFFEFE)
                 )
             )
             {
-                Text("Войти",
-                    fontSize =20.sp
+                Text(
+                    "Войти",
+                    fontSize = 20.sp
                 )
             }
         }
