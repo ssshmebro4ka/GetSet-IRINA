@@ -40,7 +40,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.getset.ui.theme.AppNavigation
-import com.example.getset.ui.theme.DatabaseHelper
+import com.example.getset.ui.theme.Database_Helper
 import com.example.getset.ui.theme.GetSetTheme
 import com.example.getset.ui.theme.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,23 +48,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 
 
 
 
-class MainViewModel(private val dbHelper: DatabaseHelper) : ViewModel() {
+class MainViewModel(private val dbHelper: Database_Helper) : ViewModel() {
 
     private val _dataList = MutableStateFlow<List<Map<String, Any>>>(emptyList())
     val dataList: StateFlow<List<Map<String, Any>>> = _dataList
 
     fun loadData() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                val data = withContext(kotlinx.coroutines.Dispatchers.IO) {
-                    dbHelper.loadDataToList()
-                }
+                val data = dbHelper.loadDataToList()
                 _dataList.update { data }
                 println("Загружено ${data.size} упражнений")
             } catch (e: Exception) {
@@ -76,12 +75,12 @@ class MainViewModel(private val dbHelper: DatabaseHelper) : ViewModel() {
 }
 class MainActivity : ComponentActivity() {
 
-    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var dbHelper: Database_Helper
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dbHelper = DatabaseHelper(this)
+        dbHelper = Database_Helper(this)
         viewModel = MainViewModel(dbHelper)
         viewModel.loadData()
         lifecycleScope.launch {

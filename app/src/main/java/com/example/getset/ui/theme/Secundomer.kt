@@ -121,7 +121,7 @@ fun Secundomer(onBackClick: () -> Unit = {}, navController: NavHostController){
             ) {
                 Icon(
                     painter = if (!isRunning){
-                        painterResource(R.drawable.play)
+                        painterResource(R.drawable.refresh)
                     }else{
                         painterResource(R.drawable.pause2)
                     },
