@@ -1,41 +1,15 @@
-package com.example.getset.theme
+package com.example.getset.ui.view
 
-import SignInScreen
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.getset.GetSetScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.example.getset.ExercisesScreen
+import com.example.getset.model.Screen
 
-import com.example.getset.MyPurpose
 import com.example.getset.ui.theme.MyPorposeTrain
 import com.example.getset.viewmodel.MainViewModel
-
-sealed class Screen(val route: String) {
-    object Workouts : Screen("workouts")
-    object WorkoutDetail : Screen("workout_detail/{workoutId}") {
-        fun passWorkoutId(workoutId: String) = "workout_detail/$workoutId"
-    }
-    object Registration : Screen("registration")
-    object SignIn : Screen("signin")
-    object MyPurpose : Screen("my_purpose")
-    object Warning: Screen("warning")
-    object DataB: Screen("data")
-    object Home: Screen("home")
-    object Profile: Screen("profile")
-    object MyTrain: Screen("mytrain")
-    object Exersize: Screen("exersize")
-    object MyPorpouseTrain: Screen("myporposetrain")
-    object Secundomer: Screen("secundomer")
-    object ChangePorpose: Screen("chageporpose")
-    object ChangeData: Screen("changedata")
-    object ChangeWarning: Screen("changewarning")
-}
 
 @Composable
 fun AppNavigation(viewModel: MainViewModel) {

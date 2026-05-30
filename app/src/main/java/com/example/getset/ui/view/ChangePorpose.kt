@@ -1,4 +1,4 @@
-package com.example.getset.theme
+package com.example.getset.ui.view
 
 import com.example.getset.R
 import android.annotation.SuppressLint
@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.model.UserProfile
+import com.example.getset.model.UserProfileRepository
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.auth.ktx.auth
 

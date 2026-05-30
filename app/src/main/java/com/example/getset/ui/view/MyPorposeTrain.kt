@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.model.ExerciseProgress
 import com.example.getset.model.UserProfile
-import com.example.getset.theme.UserProfileRepository
+import com.example.getset.model.UserProfileRepository
 import com.example.getset.viewmodel.MainViewModel
 import java.text.SimpleDateFormat
 import java.util.Date

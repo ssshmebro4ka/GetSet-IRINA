@@ -1,21 +1,27 @@
-package com.example.getset.theme
+package com.example.getset.ui.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -25,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,55 +40,110 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.model.UserProfile
+import com.example.getset.model.UserProfileRepository
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.auth.ktx.auth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DataB(navController: NavHostController) {
+fun DataBCh(onBackClick: () -> Unit = {}, navController: NavHostController){
     var gender by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
     var myweight by remember { mutableStateOf("") }
     var wantweight by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf("") }
+    var successMessage by remember { mutableStateOf("") }
+    var isDataLoaded by remember { mutableStateOf(false) }
     val genderOptions = listOf("Женский", "Мужской")
     val isFormValid by remember {
         derivedStateOf {
             gender.isNotBlank() && height.isNotBlank() && myweight.isNotBlank() && wantweight.isNotBlank()
         }
     }
-
     val repository = remember { UserProfileRepository() }
-
+    LaunchedEffect(Unit) {
+        println("DataBCh: Загрузка данных...")
+        isDataLoaded = false
+        repository.loadProfile { profile, error ->
+            if (profile != null) {
+                println("DataBCh: Данные загружены: пол=${profile.gender}, рост=${profile.height}")
+                gender = profile.gender
+                height = profile.height
+                myweight = profile.myweight
+                wantweight = profile.wantweight
+            } else if (error != null) {
+                println("DataBCh: Ошибка загрузки: $error")
+                errorMessage = "Ошибка загрузки: $error"
+            } else {
+                println("DataBCh: Данных нет, нужно заполнить")
+            }
+            isDataLoaded = true
+        }
+    }
     Box(modifier = Modifier.fillMaxWidth()){
         Column (
             modifier = Modifier
                 .background(Color.White)
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ){
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                IconButton(onClick = { navController.popBackStack() },
+                    modifier = Modifier.size(48.dp)) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = " ",
+                        tint = Color(0xFFF117C00),
+                        modifier = Modifier.size(45.dp)
+                    )
+                }
+            }
+
             Text(
-                text = "Мои данные",
-                fontSize = 60.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFF117C00),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 60.dp),
-            )
-            Text(
-                text = "Пол",
+                text = "Изменить мои",
                 fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 40.dp),
             )
+            Text(
+                text = "данные",
+                fontSize = 45.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFF117C00),
+                modifier = Modifier
+                    .fillMaxWidth()
+
+            )
+
+            if (!isDataLoaded) {
+                Text(
+                    text = "Загрузка данных...",
+                    fontSize = 18.sp,
+                    color = Color.Gray,
+                    modifier = Modifier.padding(20.dp)
+                )
+            }
+
+            Text(
+                text = "Пол",
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFF117C00),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp),
+            )
+
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange = { expanded = it }) {
@@ -123,12 +185,12 @@ fun DataB(navController: NavHostController) {
 
             Text(
                 text = "Рост",
-                fontSize = 45.sp,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 10.dp),
             )
             OutlinedTextField(
                 value = height,
@@ -145,14 +207,15 @@ fun DataB(navController: NavHostController) {
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier.fillMaxWidth()
             )
+
             Text(
                 text = "Текущий вес",
-                fontSize = 45.sp,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 10.dp),
             )
             OutlinedTextField(
                 value = myweight,
@@ -169,14 +232,15 @@ fun DataB(navController: NavHostController) {
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier.fillMaxWidth()
             )
+
             Text(
                 text = "Желаемый вес",
-                fontSize = 45.sp,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 10.dp),
             )
             OutlinedTextField(
                 value = wantweight,
@@ -193,6 +257,7 @@ fun DataB(navController: NavHostController) {
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier.fillMaxWidth()
             )
+
             Spacer(modifier = Modifier.height(40.dp))
 
             if (errorMessage.isNotBlank()) {
@@ -204,23 +269,28 @@ fun DataB(navController: NavHostController) {
                 )
             }
 
+            if (successMessage.isNotBlank()) {
+                Text(
+                    text = successMessage,
+                    color = Color(0xFFF117C00),
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+
             Button(
                 onClick = {
                     if (isFormValid && !isLoading) {
                         isLoading = true
                         errorMessage = ""
-
-                        println("DataB: СОХРАНЕНИЕ ДАННЫХ")
-                        println("DataB: пол=$gender, рост=$height, вес=$myweight, цель=$wantweight")
-
+                        successMessage = ""
+                        println(" DataBCh: СОХРАНЕНИЕ ДАННЫХ")
                         val currentUser = Firebase.auth.currentUser
                         if (currentUser == null) {
                             errorMessage = "Пользователь не залогинен"
                             isLoading = false
                             return@Button
                         }
-
-                        // Загружаем существующие данные (чтобы не потерять цели и области)
                         repository.loadProfile { profile, loadError ->
                             val existingProfile = profile ?: UserProfile()
                             val updatedProfile = existingProfile.copy(
@@ -229,17 +299,15 @@ fun DataB(navController: NavHostController) {
                                 myweight = myweight,
                                 wantweight = wantweight
                             )
-
                             repository.saveProfile(updatedProfile) { success, saveError ->
                                 isLoading = false
 
                                 if (success) {
-                                    println("DataB: Данные сохранены!")
-                                    navController.navigate(Screen.Home.route) {
-                                        popUpTo(0) { inclusive = true }
-                                    }
+                                    println("DataBCh: ДАННЫЕ ОБНОВЛЕНЫ!")
+                                    successMessage = "Данные сохранены!"
+                                    navController.popBackStack()
                                 } else {
-                                    println("DataB: Ошибка: $saveError")
+                                    println("DataBCh: ОШИБКА: $saveError")
                                     errorMessage = saveError ?: "Ошибка сохранения"
                                 }
                             }
@@ -257,7 +325,7 @@ fun DataB(navController: NavHostController) {
                     disabledContentColor = Color(0xFFF117C00)
                 )
             ) {
-                Text(text = if (isLoading) "Сохранение..." else "Далее", fontSize = 20.sp)
+                Text(text = if (isLoading) "Сохранение..." else "Сохранить", fontSize = 20.sp)
             }
         }
     }

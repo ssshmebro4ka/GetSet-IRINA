@@ -1,6 +1,5 @@
-package com.example.getset.theme
+package com.example.getset.model
 
-import com.example.getset.model.UserProfile
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

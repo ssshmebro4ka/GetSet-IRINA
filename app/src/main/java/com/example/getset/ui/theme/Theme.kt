@@ -1,6 +1,5 @@
-package com.example.getset.theme
+package com.example.getset.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

@@ -1,6 +1,6 @@
-package com.example.getset.theme
+package com.example.getset.ui.view
 
-import android.R.attr.fontWeight
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,10 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.R
+import com.example.getset.model.Screen
 
+@SuppressLint("InvalidColorHexValue")
 @Composable
-fun HomeScreen(navController: NavHostController) {
-    var selectedItem by remember { mutableStateOf(0) }
+fun IScreen(navController: NavHostController) {
+    var selectedItem by remember { mutableStateOf(1) }
     val items = listOf("Главная", "Я")//navigation bar
     val selectedIcons = listOf(
         painterResource(id = R.drawable.home),
@@ -48,15 +50,15 @@ fun HomeScreen(navController: NavHostController) {
         painterResource(id = R.drawable.i)
     )
     Scaffold(
-        bottomBar = {NavigationBar (containerColor = Color(0xFFF117C00)){
+        bottomBar = {NavigationBar (containerColor = Color(0xFFF117C00)){ // 0xFFF117C00
             items.forEachIndexed { index, item -> NavigationBarItem(
                 icon = {
                     Icon(
-                    painter = if(selectedItem==index) selectedIcons[index] else unselectedIcons[index],
-                    contentDescription = item,
-                    modifier = Modifier.size(24.dp),
+                        painter = if(selectedItem==index) selectedIcons[index] else unselectedIcons[index],
+                        contentDescription = item,
+                        modifier = Modifier.size(24.dp),
                         tint = if (selectedItem == index) Color.White else Color(0xFFF79A326)
-                )
+                    )
                 },
                 label = {
                     Text(
@@ -65,23 +67,19 @@ fun HomeScreen(navController: NavHostController) {
                     )
                 },
                 selected = selectedItem == index,
-                onClick = {
-                    selectedItem=index
-                    when(index){
-                        0->{}
-                        1->{
-                            navController.navigate(Screen.Profile.route)
-                        }
-                    }
-                },
+                onClick = { selectedItem = index
+                          when(index){
+                             0->{navController.navigate(Screen.Home.route)}
+                             1->{}
+                          } },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color.White,
                     unselectedIconColor = Color.White,
                     selectedTextColor = Color(0xFFF117C00),
                     unselectedTextColor = Color.White,
-                    indicatorColor = Color(0xFFF117C00)
+                    indicatorColor =  Color(0xFFF117C00)
                 )
-                )
+            )
             }
         }
         }
@@ -104,18 +102,9 @@ fun HomeScreen(navController: NavHostController) {
                     .fillMaxWidth()
 
             )
-            Text(
-                text = "Здравствуйте!",
-                fontSize = 50.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color(0xFFF117C00),
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(15.dp))
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             Button(
-                onClick = {navController.navigate(Screen.MyTrain.route)},
+                onClick = {navController.navigate(Screen.ChangePorpose.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -131,8 +120,42 @@ fun HomeScreen(navController: NavHostController) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Мои тренировки",
-                        fontSize = 23.sp,
+                        text = "Изменить цель",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White,
+                        modifier = Modifier
+
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.vector),
+                        contentDescription = " ",
+                        modifier = Modifier.size(20.dp),
+                        tint = Color.White
+                    )
+                }
+
+            }
+            Spacer(modifier = Modifier.height(15.dp))
+            Button(
+                onClick = {navController.navigate(Screen.ChangeData.route)},
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFF117C00)
+                ),
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+
+                ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Изменить параметры тела",
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
                         modifier = Modifier
@@ -148,7 +171,7 @@ fun HomeScreen(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(15.dp))
             Button(
-                onClick = {navController.navigate(Screen.Exersize.route)},
+                onClick = {navController.navigate(Screen.ChangeWarning.route)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFF117C00)
                 ),
@@ -164,74 +187,8 @@ fun HomeScreen(navController: NavHostController) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Упражнения",
-                        fontSize = 23.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.White,
-                        modifier = Modifier
-
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.vector),
-                        contentDescription = " ",
-                        modifier = Modifier.size(20.dp),
-                        tint = Color.White
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(15.dp))
-            Button(
-                onClick = {navController.navigate(Screen.MyPorpouseTrain.route)},
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFF117C00)
-                ),
-                shape = RoundedCornerShape(10.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-
-                ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "Мои достижения",
-                        fontSize = 23.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.White,
-                        modifier = Modifier
-
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.vector),
-                        contentDescription = " ",
-                        modifier = Modifier.size(20.dp),
-                        tint = Color.White
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(15.dp))
-            Button(
-                onClick = {navController.navigate(Screen.Secundomer.route)},
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFF117C00)
-                ),
-                shape = RoundedCornerShape(10.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-
-                ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "Секундомер",
-                        fontSize = 23.sp,
+                        text = "Изменить область внимания",
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.White,
                         modifier = Modifier
@@ -247,6 +204,4 @@ fun HomeScreen(navController: NavHostController) {
             }
         }
     }
-
-
 }

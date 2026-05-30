@@ -1,4 +1,4 @@
-package com.example.getset.theme
+package com.example.getset.model
 
 import android.content.Context
 import android.database.Cursor

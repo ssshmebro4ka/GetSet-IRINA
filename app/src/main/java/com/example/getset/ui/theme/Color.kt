@@ -1,6 +1,5 @@
-package com.example.getset.theme
+package com.example.getset.ui.theme
 
-import android.annotation.SuppressLint
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)

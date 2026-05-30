@@ -1,6 +1,5 @@
-package com.example.getset.theme
+package com.example.getset.ui.view
 
-import android.R.attr.fontWeight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -51,6 +50,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.R
 import com.example.getset.model.UserProfile
+import com.example.getset.model.UserProfileRepository
 import com.example.getset.model.Workout
 import java.text.SimpleDateFormat
 import java.util.Date

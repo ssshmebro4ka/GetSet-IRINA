@@ -1,4 +1,4 @@
-package com.example.getset
+package com.example.getset.ui.view
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -33,44 +33,46 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.getset.R
+import com.example.getset.model.Screen
 import com.example.getset.model.UserProfile
-import com.example.getset.theme.Screen
-import com.example.getset.theme.UserProfileRepository
-
+import com.example.getset.model.UserProfileRepository
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.auth.ktx.auth
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun MyPurpose(navController: NavHostController) {
-    var selectedPurposes by remember { mutableStateOf<Set<String>>(emptySet()) }
+fun Warning(navController: NavHostController) {
+    var selectedAreas by remember { mutableStateOf<Set<String>>(emptySet()) }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
 
     val repository = remember { UserProfileRepository() }
-    val allPurposes = listOf(
-        "Стать сильнее",
-        "Улучшить здоровье",
-        "Сбросить вес",
-        "Стать стройным и рельефным",
-        "Набрать мышечную массу"
+
+    val allAreas = listOf(
+        "Спина",
+        "Руки",
+        "Грудь",
+        "Ноги",
+        "Ягодицы",
+        "Пресс"
     )
-    fun togglePurpose(purpose: String) {
-        selectedPurposes = if (selectedPurposes.contains(purpose)) {
-            selectedPurposes - purpose
+
+    fun toggleArea(area: String) {
+        selectedAreas = if (selectedAreas.contains(area)) {
+            selectedAreas - area
         } else {
-            selectedPurposes + purpose
+            selectedAreas + area
         }
     }
 
-    val isOneChoose = selectedPurposes.isNotEmpty()
-
+    val isOneChoose = selectedAreas.isNotEmpty()
     LaunchedEffect(Unit) {
-        println("🔵 MyPurpose: Загрузка целей...")
+        println("Warning: Загрузка областей внимания...")
         repository.loadProfile { profile, error ->
-            if (profile != null && profile.purposes.isNotEmpty()) {
-                println("🔵 MyPurpose: Загружены цели: ${profile.purposes}")
-                selectedPurposes = profile.purposes.toSet()
+            if (profile != null && profile.attentionAreas.isNotEmpty()) {
+                println("Warning: Загружены области: ${profile.attentionAreas}")
+                selectedAreas = profile.attentionAreas.toSet()
             }
         }
     }
@@ -97,7 +99,7 @@ fun MyPurpose(navController: NavHostController) {
         Spacer(modifier = Modifier.height(15.dp))
 
         Text(
-            text = "Выберите цели",
+            text = "Выберите области внимания",
             fontSize = 30.sp,
             fontWeight = FontWeight.Medium,
             color = Color(0xFFF117C00),
@@ -105,26 +107,25 @@ fun MyPurpose(navController: NavHostController) {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        allPurposes.forEach { purpose ->
-            SelectableButton(
-                text = purpose,
-                isSelected = selectedPurposes.contains(purpose),
-                onClick = { togglePurpose(purpose) }
+        allAreas.forEach { area ->
+            SelectableButtonWarning(
+                text = area,
+                isSelected = selectedAreas.contains(area),
+                onClick = { toggleArea(area) }
             )
             Spacer(modifier = Modifier.height(20.dp))
         }
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        if (selectedPurposes.isNotEmpty()) {
+        if (selectedAreas.isNotEmpty()) {
             Text(
-                text = "Выбрано: ${selectedPurposes.size} целей",
+                text = "Выбрано: ${selectedAreas.size} областей",
                 fontSize = 16.sp,
                 color = Color(0xFFF117C00),
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
-
         if (errorMessage.isNotBlank()) {
             Text(
                 text = errorMessage,
@@ -133,14 +134,13 @@ fun MyPurpose(navController: NavHostController) {
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
-
         Button(
             onClick = {
                 if (isOneChoose && !isLoading) {
                     isLoading = true
                     errorMessage = ""
 
-                    println("MyPurpose: СОХРАНЕНИЕ ЦЕЛЕЙ: $selectedPurposes")
+                    println("Warning: СОХРАНЕНИЕ ОБЛАСТЕЙ: $selectedAreas")
 
                     val currentUser = Firebase.auth.currentUser
                     if (currentUser == null) {
@@ -150,18 +150,18 @@ fun MyPurpose(navController: NavHostController) {
                     }
                     repository.loadProfile { profile, loadError ->
                         val existingProfile = profile ?: UserProfile()
-                        val updatedProfile = existingProfile.copy(purposes = selectedPurposes.toList())
+                        val updatedProfile = existingProfile.copy(attentionAreas = selectedAreas.toList())
 
                         repository.saveProfile(updatedProfile) { success, saveError ->
                             isLoading = false
 
                             if (success) {
-                                println("MyPurpose: Цели сохранены!")
-                                navController.navigate(Screen.Warning.route) {
+                                println("Warning: Области внимания сохранены!")
+                                navController.navigate(Screen.DataB.route) {
                                     popUpTo(0) { inclusive = true }
                                 }
                             } else {
-                                println("MyPurpose: Ошибка: $saveError")
+                                println("Warning: Ошибка: $saveError")
                                 errorMessage = saveError ?: "Ошибка сохранения"
                             }
                         }
@@ -185,7 +185,7 @@ fun MyPurpose(navController: NavHostController) {
 }
 
 @Composable
-fun SelectableButton(
+fun SelectableButtonWarning(
     text: String,
     isSelected: Boolean,
     onClick: () -> Unit,
@@ -195,7 +195,7 @@ fun SelectableButton(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(80.dp),
+            .height(70.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSelected) Color(0xFFF117C00) else Color(0xFFFB7D092),

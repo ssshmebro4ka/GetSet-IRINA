@@ -1,4 +1,4 @@
-package com.example.getset.theme
+package com.example.getset.ui.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -45,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.getset.model.UserProfile
 import com.example.getset.model.Workout
+import com.example.getset.model.UserProfileRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

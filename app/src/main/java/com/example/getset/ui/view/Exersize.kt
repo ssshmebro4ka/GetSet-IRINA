@@ -1,6 +1,5 @@
-package com.example.getset
+package com.example.getset.ui.view
 
-import android.R.attr.fontWeight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.getset.viewmodel.MainViewModel
 
@@ -48,7 +48,7 @@ fun ExercisesScreen(
     navController: NavHostController,
     viewModel: MainViewModel? = null
 ) {
-    val actualViewModel = viewModel ?: androidx.lifecycle.viewmodel.compose.viewModel()
+    val actualViewModel = viewModel ?: viewModel()
     val dataList by actualViewModel.dataList.collectAsState()
 
     var selectedExerciseMap by remember { mutableStateOf<Map<String, Any>?>(null) }
