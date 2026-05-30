@@ -1,4 +1,4 @@
-package com.example.getset.ui.view
+package com.example.getset.ui.view.app
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background

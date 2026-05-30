@@ -1,4 +1,4 @@
-package com.example.getset.ui.view
+package com.example.getset.ui.view.separate
 
 import androidx.compose.material3.Icon
 import androidx.compose.foundation.layout.Arrangement

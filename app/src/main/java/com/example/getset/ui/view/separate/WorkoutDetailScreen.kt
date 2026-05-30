@@ -1,4 +1,4 @@
-package com.example.getset.ui.view
+package com.example.getset.ui.view.separate
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

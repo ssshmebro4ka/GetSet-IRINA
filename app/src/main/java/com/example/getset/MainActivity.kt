@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.example.getset.model.Database_Helper
 import com.example.getset.ui.theme.GetSetTheme
-import com.example.getset.ui.view.AppNavigation
+import com.example.getset.ui.view.navigation.AppNavigation
 import com.example.getset.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 

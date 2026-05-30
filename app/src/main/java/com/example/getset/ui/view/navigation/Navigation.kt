@@ -1,4 +1,4 @@
-package com.example.getset.ui.view
+package com.example.getset.ui.view.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
@@ -9,6 +9,20 @@ import androidx.navigation.navArgument
 import com.example.getset.model.Screen
 
 import com.example.getset.ui.theme.MyPorposeTrain
+import com.example.getset.ui.view.app.HomeScreen
+import com.example.getset.ui.view.app.IScreen
+import com.example.getset.ui.view.separate.ChangeWarning
+import com.example.getset.ui.view.separate.DataB
+import com.example.getset.ui.view.separate.DataBCh
+import com.example.getset.ui.view.separate.ExercisesScreen
+import com.example.getset.ui.view.separate.GetSetScreen
+import com.example.getset.ui.view.separate.MyChangePurpose
+import com.example.getset.ui.view.separate.MyPurpose
+import com.example.getset.ui.view.separate.MyTrain
+import com.example.getset.ui.view.separate.Secundomer
+import com.example.getset.ui.view.separate.SignInScreen
+import com.example.getset.ui.view.separate.Warning
+import com.example.getset.ui.view.separate.WorkoutDetailScreen
 import com.example.getset.viewmodel.MainViewModel
 
 @Composable

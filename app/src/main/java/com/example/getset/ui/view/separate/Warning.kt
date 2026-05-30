@@ -1,6 +1,5 @@
-package com.example.getset.ui.view
+package com.example.getset.ui.view.separate
 
-import com.example.getset.R
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,22 +14,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.getset.R
+import com.example.getset.model.Screen
 import com.example.getset.model.UserProfile
 import com.example.getset.model.UserProfileRepository
 import com.google.firebase.ktx.Firebase
@@ -38,76 +42,64 @@ import com.google.firebase.auth.ktx.auth
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostController){
-    var selectedPurposes by remember { mutableStateOf<Set<String>>(emptySet()) }
+fun Warning(navController: NavHostController) {
+    var selectedAreas by remember { mutableStateOf<Set<String>>(emptySet()) }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
-    var successMessage by remember { mutableStateOf("") }
-    var isDataLoaded by remember { mutableStateOf(false) }
 
     val repository = remember { UserProfileRepository() }
 
-    val allPurposes = listOf(
-        "Стать сильнее",
-        "Улучшить здоровье",
-        "Сбросить вес",
-        "Стать стройным и рельефным",
-        "Набрать мышечную массу"
+    val allAreas = listOf(
+        "Спина",
+        "Руки",
+        "Грудь",
+        "Ноги",
+        "Ягодицы",
+        "Пресс"
     )
-    LaunchedEffect(Unit) {
-        println("MyChangePurpose: Загрузка целей...")
-        isDataLoaded = false
-        repository.loadProfile { profile, error ->
-            if (profile != null && profile.purposes.isNotEmpty()) {
-                println("MyChangePurpose: Загружены цели: ${profile.purposes}")
-                selectedPurposes = profile.purposes.toSet()
-            } else {
-                println("MyChangePurpose: Нет сохраненных целей")
-                selectedPurposes = emptySet()
-            }
-            isDataLoaded = true
-        }
-    }
 
-    fun togglePurpose(purpose: String) {
-        selectedPurposes = if (selectedPurposes.contains(purpose)) {
-            selectedPurposes - purpose
+    fun toggleArea(area: String) {
+        selectedAreas = if (selectedAreas.contains(area)) {
+            selectedAreas - area
         } else {
-            selectedPurposes + purpose
+            selectedAreas + area
         }
     }
 
-    val isOneChoose = selectedPurposes.isNotEmpty()
+    val isOneChoose = selectedAreas.isNotEmpty()
+    LaunchedEffect(Unit) {
+        println("Warning: Загрузка областей внимания...")
+        repository.loadProfile { profile, error ->
+            if (profile != null && profile.attentionAreas.isNotEmpty()) {
+                println("Warning: Загружены области: ${profile.attentionAreas}")
+                selectedAreas = profile.attentionAreas.toSet()
+            }
+        }
+    }
 
     Column (
         modifier = Modifier
             .background(Color.White)
             .fillMaxSize()
-            .padding(40.dp),
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ){
-        Row (
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            IconButton(
-                onClick = { navController.popBackStack() },
-                modifier = Modifier.size(48.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = " ",
-                    tint = Color(0xFFF117C00),
-                    modifier = Modifier.size(45.dp)
-                )
-            }
-        }
+        Text(
+            text = "GetSet",
+            fontSize = 64.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFFF117C00),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 50.dp),
+            textAlign = TextAlign.Center
+        )
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         Text(
-            text = "Выберите цели",
+            text = "Выберите области внимания",
             fontSize = 30.sp,
             fontWeight = FontWeight.Medium,
             color = Color(0xFFF117C00),
@@ -115,36 +107,25 @@ fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostControll
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-
-        if (!isDataLoaded) {
-            Text(
-                text = "Загрузка данных...",
-                fontSize = 18.sp,
-                color = Color.Gray,
-                modifier = Modifier.padding(20.dp)
-            )
-        }
-
-        allPurposes.forEach { purpose ->
-            SelectableButtonChangePurpose(
-                text = purpose,
-                isSelected = selectedPurposes.contains(purpose),
-                onClick = { togglePurpose(purpose) }
+        allAreas.forEach { area ->
+            SelectableButtonWarning(
+                text = area,
+                isSelected = selectedAreas.contains(area),
+                onClick = { toggleArea(area) }
             )
             Spacer(modifier = Modifier.height(20.dp))
         }
 
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-        if (selectedPurposes.isNotEmpty()) {
+        if (selectedAreas.isNotEmpty()) {
             Text(
-                text = "Выбрано: ${selectedPurposes.size} целей",
+                text = "Выбрано: ${selectedAreas.size} областей",
                 fontSize = 16.sp,
                 color = Color(0xFFF117C00),
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
-
         if (errorMessage.isNotBlank()) {
             Text(
                 text = errorMessage,
@@ -153,24 +134,13 @@ fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostControll
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
-
-        if (successMessage.isNotBlank()) {
-            Text(
-                text = successMessage,
-                color = Color(0xFFF117C00),
-                fontSize = 14.sp,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-        }
-
         Button(
             onClick = {
                 if (isOneChoose && !isLoading) {
                     isLoading = true
                     errorMessage = ""
-                    successMessage = ""
 
-                    println("MyChangePurpose: СОХРАНЕНИЕ ЦЕЛЕЙ: $selectedPurposes")
+                    println("Warning: СОХРАНЕНИЕ ОБЛАСТЕЙ: $selectedAreas")
 
                     val currentUser = Firebase.auth.currentUser
                     if (currentUser == null) {
@@ -178,20 +148,20 @@ fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostControll
                         isLoading = false
                         return@Button
                     }
-
                     repository.loadProfile { profile, loadError ->
                         val existingProfile = profile ?: UserProfile()
-                        val updatedProfile = existingProfile.copy(purposes = selectedPurposes.toList())
+                        val updatedProfile = existingProfile.copy(attentionAreas = selectedAreas.toList())
 
                         repository.saveProfile(updatedProfile) { success, saveError ->
                             isLoading = false
 
                             if (success) {
-                                println("MyChangePurpose: Цели обновлены!")
-                                successMessage = "Цели сохранены!"
-                                navController.popBackStack()
+                                println("Warning: Области внимания сохранены!")
+                                navController.navigate(Screen.DataB.route) {
+                                    popUpTo(0) { inclusive = true }
+                                }
                             } else {
-                                println("MyChangePurpose: Ошибка: $saveError")
+                                println("Warning: Ошибка: $saveError")
                                 errorMessage = saveError ?: "Ошибка сохранения"
                             }
                         }
@@ -209,13 +179,13 @@ fun MyChangePurpose(onBackClick: () -> Unit = {}, navController: NavHostControll
                 disabledContentColor = Color(0xFFF117C00)
             )
         ) {
-            Text(text = if (isLoading) "Сохранение..." else "Сохранить", fontSize = 20.sp)
+            Text(text = if (isLoading) "Сохранение..." else "Далее", fontSize = 20.sp)
         }
     }
 }
 
 @Composable
-fun SelectableButtonChangePurpose(
+fun SelectableButtonWarning(
     text: String,
     isSelected: Boolean,
     onClick: () -> Unit,
@@ -225,7 +195,7 @@ fun SelectableButtonChangePurpose(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(80.dp),
+            .height(70.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSelected) Color(0xFFF117C00) else Color(0xFFFB7D092),
@@ -242,8 +212,8 @@ fun SelectableButtonChangePurpose(
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
-            ){
-                if (isSelected){
+            ) {
+                if (isSelected) {
                     Icon(
                         painter = painterResource(id = R.drawable.group),
                         contentDescription = " ",

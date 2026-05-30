@@ -1,4 +1,4 @@
-package com.example.getset.ui.view
+package com.example.getset.ui.view.separate
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -25,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,10 +36,9 @@ import com.google.firebase.ktx.Firebase
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun GetSetScreen(navController: NavHostController) {
+fun SignInScreen(navController: NavHostController) {
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var isNavigating by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
     val isFormValid by remember {
         derivedStateOf {
@@ -48,35 +46,32 @@ fun GetSetScreen(navController: NavHostController) {
         }
     }
     val auth = Firebase.auth
-    val lifecycleOwner = LocalLifecycleOwner.current
     Box(
         modifier = Modifier.fillMaxSize()
-    ) {
-        Column(
-            modifier = Modifier
-                .background(Color.White)
-                .fillMaxSize()
-                .padding(24.dp),
+    ){
+        Column (modifier = Modifier
+            .background(Color.White)
+            .fillMaxSize()
+            .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
-        ) {
-
+        ){
             Text(
                 text = "GetSet",
                 fontSize = 64.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFF117C00),
+                fontWeight= FontWeight.Bold,
+                color= Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 50.dp),
                 textAlign = TextAlign.Center
             )
-
+            Spacer(modifier = Modifier.height(48.dp))
             Text(
-                text = "Регистрация",
+                text = "Вход",
                 fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFF117C00),
+                fontWeight= FontWeight.Bold,
+                color= Color(0xFFF117C00),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 50.dp),
@@ -85,102 +80,77 @@ fun GetSetScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(48.dp))
             OutlinedTextField(
                 value = login,
-                onValueChange = { login = it },
-                label = { Text("Почта", fontSize = 20.sp) },
+                onValueChange = {login=it
+                    errorMessage = ""
+                },
+                label={ Text("Почта", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
-                    focusedContainerColor = Color(0xFFFA1D05A),
+                    focusedContainerColor  = Color(0xFFFA1D05A),
                     focusedLabelColor = Color(0xFFF117C00),
                     unfocusedLabelColor = Color(0xFFF117C00),
                     focusedBorderColor = Color(0xFFF117C00),
                     unfocusedBorderColor = Color(0xFFF117C00)
                 ),
-                shape = RoundedCornerShape(15.dp),
+                shape= RoundedCornerShape(15.dp),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(40.dp))
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
-                label = { Text("Пароль", fontSize = 20.sp) },
+                onValueChange = {password=it
+                    errorMessage = ""},
+                label={Text("Пароль", fontSize = 20.sp)},
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFE7F4D2),
-                    focusedContainerColor = Color(0xFFFA1D05A),
+                    focusedContainerColor  = Color(0xFFFA1D05A),
                     focusedLabelColor = Color(0xFFF117C00),
                     unfocusedLabelColor = Color(0xFFF117C00),
                     focusedBorderColor = Color(0xFFF117C00),
                     unfocusedBorderColor = Color(0xFFF117C00)
                 ),
-                shape = RoundedCornerShape(15.dp),
+                shape= RoundedCornerShape(15.dp),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(40.dp))
-            Button(
-                onClick = {
-                    if (isFormValid) {
-                        auth.createUserWithEmailAndPassword(login, password)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    navController.navigate(Screen.MyPurpose.route) {
-                                        popUpTo(Screen.Registration.route) { inclusive = true }
-                                    }
-                                } else {
-                                    errorMessage =
-                                        task.exception?.localizedMessage ?: "Ошибка регистрации"
+            Button(onClick = {
+                if (isFormValid) {
+                    auth.signInWithEmailAndPassword(login, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                println("Вход выполнен: ${auth.currentUser?.email}")
+                                navController.navigate(Screen.Home.route) {
+                                    popUpTo(0) { inclusive = true }
                                 }
+                            } else {
+                                errorMessage = task.exception?.localizedMessage ?: "Ошибка входа"
                             }
-                    }
-                },
+                        }
+                }
+            },
                 enabled = isFormValid,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isFormValid) Color(0xFFF117C00) else Color(0xFFFB7D092),
-                    contentColor = if (isFormValid) Color(0xFFFFFFEFE) else Color(color = 0xFFF117C00),
+                colors= ButtonDefaults.buttonColors(
+                    containerColor = if (isFormValid) Color(0xFFF117C00) else Color (0xFFFB7D092),
+                    contentColor = if(isFormValid) Color(0xFFFFFFEFE) else Color(color = 0xFFF117C00) ,
                     disabledContainerColor = Color(0xFFFB7D092),
                     disabledContentColor = Color(0xFFF117C00)
                 ),
 
                 )
             {
-                Text(
-                    text = "Зарегистрироваться",
-                    fontSize = 20.sp
-                )
+                Text(text="Войти",
+                    fontSize =20.sp)
             }
             if (errorMessage.isNotBlank()) {
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = errorMessage,
                     color = Color.Red,
                     fontSize = 14.sp,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(40.dp))
-            Text(
-                text = "Уже есть аккаунт ?",
-                fontSize = 20.sp,
-                color = Color(0xFFF117C00)
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Button(
-                onClick = {
-                    navController.navigate(Screen.SignIn.route) {
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp), //эщкере
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFF117C00),
-                    contentColor = Color(0xFFFFFFEFE)
-                )
-            )
-            {
-                Text(
-                    "Войти",
-                    fontSize = 20.sp
+                    textAlign = TextAlign.Center
                 )
             }
         }
