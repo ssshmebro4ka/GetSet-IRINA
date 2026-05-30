@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-03-27T08:36:52.538257200Z">
+        <DropdownSelection timestamp="2026-05-30T06:52:01.455865200Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\VivoBook S\.android\avd\Pixel_9_Pro.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\VivoBook S\.android\avd\Pixel_8.avd" />
             </handle>
           </Target>
         </DropdownSelection>

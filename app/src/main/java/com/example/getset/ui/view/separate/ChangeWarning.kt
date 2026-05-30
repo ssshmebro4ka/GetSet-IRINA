@@ -99,9 +99,9 @@ fun ChangeWarning(onBackClick: () -> Unit = {}, navController: NavHostController
                 )
             }
         }
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(25.dp))
         Text(
-            text = "Выберите области внимания (можно несколько)",
+            text = "Выберите области внимания",
             fontSize = 30.sp,
             fontWeight = FontWeight.Medium,
             color = Color(0xFFF117C00),
